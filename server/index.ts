@@ -8,7 +8,7 @@ import apiRoutes from "./routes/routes";
 
 dotenv.config();
 const app = express();
-// app.use(bodyParser.json({ limit: "30mb", extended: true })); //definindo tamanho limite das requisições
+app.use(bodyParser.json()); //definindo tamanho limite das requisições
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use(helmet());

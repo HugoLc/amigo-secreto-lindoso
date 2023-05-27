@@ -4,7 +4,7 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon index.ts",
+    "dev": "nodemon index.ts",
     "start": "node index.ts"
   },
   "author": "Hugo L Correia",

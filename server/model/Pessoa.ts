@@ -1,14 +1,16 @@
-class Pessoa {
+import Participantes from "./pessoa.models";
+
+export default class Pessoa {
   private _nome: string;
   private _telefone: string;
   private _sugestaoPresente: string;
-  private _amigoSecreto: string;
+  private _amigoSecreto?: string;
 
   constructor(
     nome: string,
     telefone: string,
     sugestaoPresente: string,
-    amigoSecreto: string
+    amigoSecreto?: string
   ) {
     this._nome = nome;
     this._telefone = telefone;
@@ -29,12 +31,23 @@ class Pessoa {
   }
 
   get amigoSecreto(): string {
-    return this._amigoSecreto;
+    return this._amigoSecreto || "";
   }
 
-  cadastrar(): void {
+  async cadastrar(): Promise<{ status: number; message: string }> {
     // Lógica para cadastrar a pessoa aqui
     // Por exemplo, você pode salvar os dados em um banco de dados
-    console.log("Pessoa cadastrada com sucesso!");
+    const newParticipante = new Participantes({
+      nome: this._nome,
+      telefone: this._telefone,
+      sugestaoPresente: this._sugestaoPresente,
+    });
+
+    try {
+      await newParticipante.save();
+      return { status: 200, message: "Pessoa cadastrada com sucesso!" };
+    } catch (error: any) {
+      return { status: 500, message: error.message };
+    }
   }
 }

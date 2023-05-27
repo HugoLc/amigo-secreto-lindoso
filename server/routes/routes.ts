@@ -3,6 +3,6 @@ import { cadastrarPessoa } from "../controllers/pessoa-controllers";
 
 const router = express.Router();
 
-router.get("/cadastrar", cadastrarPessoa);
+router.post("/cadastrar", cadastrarPessoa);
 
 export default router;

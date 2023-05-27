@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const participantesSchema = new mongoose.Schema({
-  nome: String,
-  telefone: String,
+  nome: { type: String, required: true, unique: true },
+  telefone: { type: String, required: true },
   sugestaoPresente: String,
   amigoSecreto: String,
 });

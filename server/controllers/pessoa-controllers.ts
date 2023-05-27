@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import Pessoa from "../model/Pessoa";
+
 export const cadastrarPessoa = async (req: Request, res: Response) => {
-  const { nome, telefone, sugestaoPresente } = req.body;
+  const { nome, senha, telefone, sugestaoPresente } = req.body;
   try {
-    const participante = new Pessoa(nome, telefone, sugestaoPresente);
+    const participante = new Pessoa(nome, senha, telefone, sugestaoPresente);
     const cadastroResponse = await participante.cadastrar();
 
     res
@@ -15,5 +16,32 @@ export const cadastrarPessoa = async (req: Request, res: Response) => {
       );
   } catch (error: any) {
     res.status(400).json({ message: error.message });
+  }
+};
+export const loginPessoa = async (req: Request, res: Response) => {
+  const { nome, senha } = req.body;
+
+  try {
+    const participante = new Pessoa(nome, senha);
+    const loginResponse = await participante.login();
+    // console.log(loginResponse);
+    res
+      .status(loginResponse.status)
+      .json({ message: loginResponse.message, token: loginResponse.token });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+export const getAmigoSecreto = async (req: Request, res: Response) => {
+  const nome = req.params.participante;
+  try {
+    const participante = new Pessoa(nome);
+    const amigoSecretoResponse = await participante.getAmigoSecreto();
+    res.status(amigoSecretoResponse.status).json({
+      message: amigoSecretoResponse.message,
+      amigoSecreto: amigoSecretoResponse.amigoSecreto || null,
+    });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
   }
 };

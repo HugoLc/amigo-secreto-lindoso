@@ -3,7 +3,8 @@ import {
   cadastrarPessoa,
   loginPessoa,
   getAmigoSecreto,
-} from "../controllers/pessoa-controllers";
+  sortearAmigoSecreto
+} from "../controllers/controllers";
 import { verificarToken } from "../middleware/auth";
 
 const router = express.Router();
@@ -15,5 +16,6 @@ router.get(
   verificarToken,
   getAmigoSecreto
 );
+router.get("/sortear", sortearAmigoSecreto)
 
 export default router;

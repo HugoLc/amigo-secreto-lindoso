@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Pessoa from "../model/Pessoa";
+import Sorteio from "../model/Sorteio";
 
 export const cadastrarPessoa = async (req: Request, res: Response) => {
   const { nome, senha, telefone, sugestaoPresente } = req.body;
@@ -44,4 +45,10 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
+};
+
+export const sortearAmigoSecreto = async (req: Request, res: Response) => {
+  const sorteio = new Sorteio();
+  await sorteio.listarParticipantes();
+  // console.log(sorteio);
 };

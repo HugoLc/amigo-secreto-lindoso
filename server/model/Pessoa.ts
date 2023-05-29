@@ -15,11 +15,11 @@ interface IAmigoSecreto {
   sugestaoPresente?: string;
 }
 export default class Pessoa {
-  private _nome: string;
-  private _senha: string;
-  private _telefone?: string;
-  private _sugestaoPresente?: string;
-  private _amigoSecreto?: string;
+  public _nome: string;
+  public _senha: string;
+  public _telefone?: string;
+  public _sugestaoPresente?: string;
+  public _amigoSecreto?: string;
 
   constructor(
     nome: string,
@@ -76,8 +76,19 @@ export default class Pessoa {
     return { status: 200, message: "Login realizado com sucesso", token };
   }
 
-  async setAmigoSecreto(): Promise<IResponse> {
-    return { status: 200, message: "Amigo secreto registrado com sucesso" };
+  async setAmigoSecreto(): Promise<void> {
+    Participantes.findOneAndUpdate(
+      { nome: this._nome },
+      { amigoSecreto: this._amigoSecreto },
+      { new: true }
+    )
+      .then((updatedDoc) => {
+        // O documento atualizado é retornado
+        console.log(updatedDoc);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   async getAmigoSecreto(): Promise<IResponse> {

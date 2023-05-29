@@ -85,7 +85,7 @@ export default class Sorteio {
   async listarParticipantes(): Promise<void> {
     await this.buscarBd();
     const amigosSorteados = await this.sortear();
-    console.log(amigosSorteados);
-    // this.atualizarBd(amigosSorteados);
+    // console.log(amigosSorteados);
+    this.atualizarBd(amigosSorteados);
   }
 }

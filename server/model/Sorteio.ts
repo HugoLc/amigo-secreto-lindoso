@@ -10,42 +10,52 @@ export default class Sorteio {
   }
 
   async sortear(): Promise<Pessoa[]> {
-    console.log(this.participantes);
+    // console.log(this.participantes);
     const listaNomesParticipantes = this.participantes?.map(({ _nome }) => {
       return _nome;
     });
-    console.log(listaNomesParticipantes);
 
-    //TODO: parece que o valor estao vinculados entre todos
-    const listaNaoSorteados = listaNomesParticipantes;
-    console.log(listaNaoSorteados);
+    if (!listaNomesParticipantes) return [];
+    var participantesDisponiveis = listaNomesParticipantes.slice();
+    var resultadoSorteio = [];
 
-    const listaAmigosSecretos = listaNomesParticipantes?.map(
-      (nomeParticipante) => {
-        if (!listaNaoSorteados) return;
+    // Itera por cada participante
+    for (var i = 0; i < listaNomesParticipantes.length; i++) {
+      var participante = listaNomesParticipantes[i];
+      var indexSorteado = Math.floor(
+        Math.random() * participantesDisponiveis.length
+      );
+      var sorteado = participantesDisponiveis[indexSorteado];
 
-        const listaSemNomeAtual = listaNaoSorteados;
-        const indexParaRemover = listaNaoSorteados.indexOf(nomeParticipante);
-        if (indexParaRemover !== -1) {
-          listaSemNomeAtual.splice(indexParaRemover, 1);
-          const indiceSorteado = Math.floor(
-            Math.random() * listaNaoSorteados.length
+      // Verifica se o participante sorteado é o próprio participante
+      if (sorteado === participante) {
+        // Se for, sorteia novamente até obter um sorteado diferente
+        while (sorteado === participante) {
+          indexSorteado = Math.floor(
+            Math.random() * participantesDisponiveis.length
           );
-
-          return new Pessoa(
-            nomeParticipante,
-            undefined,
-            undefined,
-            undefined,
-            listaSemNomeAtual[indiceSorteado]
-          );
+          sorteado = participantesDisponiveis[indexSorteado];
         }
       }
-    );
-    // console.log({ listaNaoSorteados });
-    // console.log({ listaAmigosSecretos });
-    if (listaAmigosSecretos) return listaAmigosSecretos as Pessoa[];
-    return [];
+
+      // Remove o sorteado da lista de participantes disponíveis
+      participantesDisponiveis.splice(indexSorteado, 1);
+
+      // Cria um objeto com o participante e o seu sorteado
+      var resultado = new Pessoa(
+        participante,
+        undefined,
+        undefined,
+        undefined,
+        sorteado
+      );
+
+      // Adiciona o resultado ao array de resultados
+      resultadoSorteio.push(resultado);
+    }
+
+    // Retorna o array de resultados
+    return resultadoSorteio;
   }
 
   async buscarBd(): Promise<void> {
@@ -75,7 +85,7 @@ export default class Sorteio {
   async listarParticipantes(): Promise<void> {
     await this.buscarBd();
     const amigosSorteados = await this.sortear();
-    // console.log(amigosSorteados);
+    console.log(amigosSorteados);
     // this.atualizarBd(amigosSorteados);
   }
 }

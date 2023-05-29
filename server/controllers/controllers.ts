@@ -48,7 +48,11 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
 };
 
 export const sortearAmigoSecreto = async (req: Request, res: Response) => {
-  const sorteio = new Sorteio();
-  await sorteio.listarParticipantes();
-  // console.log(sorteio);
+  try {
+    const sorteio = new Sorteio();
+    await sorteio.listarParticipantes();
+    // console.log("resultado sorteio", sorteio);
+  } catch (error: any) {
+    console.log(error.message);
+  }
 };

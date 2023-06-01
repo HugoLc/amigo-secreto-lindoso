@@ -77,6 +77,12 @@ export default class Pessoa {
   }
 
   async setAmigoSecreto(): Promise<void> {
+    // TODO: ativar em prod
+    // const criptAmigoSecreto = CryptoJS.AES.encrypt(
+    //   this._amigoSecreto as string,
+    //   process.env.PW_SECRET as string
+    // ).toString();
+
     Participantes.findOneAndUpdate(
       { nome: this._nome },
       { amigoSecreto: this._amigoSecreto },
@@ -101,8 +107,14 @@ export default class Pessoa {
       return { status: 404, message: "Amigo secreto não registrado" };
     }
 
+    // TODO: ativar em prod
+    // const descriptAmigoSecreto = CryptoJS.AES.decrypt(
+    //   usuario.amigoSecreto,
+    //   process.env.PW_SECRET as string
+    // ).toString(CryptoJS.enc.Utf8);
+
     const amigoSecretoInfo = await Participantes.findOne({
-      nome: usuario.amigoSecreto,
+      nome: usuario.amigoSecreto, //descriptAmigoSecreto
     }).select("nome telefone sugestaoPresente");
     if (!amigoSecretoInfo) {
       return { status: 404, message: "Amigo secreto não encontrado" };

@@ -9,6 +9,7 @@ export function verificarToken(req: Request, res: Response, next: any) {
 
   if (!token) {
     // Se não houver token, retornar erro de autenticação
+    console.log("AQUI");
     return res
       .status(401)
       .json({ message: "Token de autenticação não fornecido" });
@@ -20,7 +21,11 @@ export function verificarToken(req: Request, res: Response, next: any) {
       userId: string;
     };
     console.log(decodedToken.userId);
-    if (decodedToken.userId !== req.params.participante) {
+
+    if (
+      req.params.participante &&
+      decodedToken.userId !== req.params.participante
+    ) {
       throw new URIError(
         "Acesso nao autorizado a pagina de: " + req.params.participante
       );

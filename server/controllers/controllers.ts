@@ -24,8 +24,10 @@ export const cadastrarPessoa = async (req: Request, res: Response) => {
   }
 };
 export const loginPessoa = async (req: Request, res: Response) => {
-  const { nome, senha } = req.body;
-
+  let { nome, senha } = req.body;
+  senha = CryptoJS.AES.decrypt(senha, process.env.PW_SECRET as string).toString(
+    CryptoJS.enc.Utf8
+  );
   try {
     const participante = new Pessoa(nome, senha);
     const loginResponse = await participante.login();
@@ -59,4 +61,7 @@ export const sortearAmigoSecreto = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
+};
+export const checkToken = async (req: Request, res: Response) => {
+  res.status(200).json("validated");
 };

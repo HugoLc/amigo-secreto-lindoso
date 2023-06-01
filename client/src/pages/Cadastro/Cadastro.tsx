@@ -1,8 +1,9 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import styles from "./styles.module.scss";
+import styles from "./Cadastro.module.scss";
 import CryptoJS from "crypto-js";
 import api from "../../service/api";
+import { encryptPassword } from "../../utils/utils";
 
 const Cadastro: React.FC = () => {
   const initialValues = {
@@ -25,19 +26,11 @@ const Cadastro: React.FC = () => {
       sugestaoPresente: suggestion,
     };
     try {
-      await api.post("/cadastrar", payload);
-      // console.log(response.data);
+      const response = await api.post("/cadastrar", payload);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const encryptPassword = (password: string, secretKey: string): string => {
-    const encryptedPassword = CryptoJS.AES.encrypt(
-      password,
-      secretKey
-    ).toString();
-    return encryptedPassword;
   };
 
   const validateForm = (values: any) => {

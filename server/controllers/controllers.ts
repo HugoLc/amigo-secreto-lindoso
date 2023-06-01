@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
 import Pessoa from "../model/Pessoa";
 import Sorteio from "../model/Sorteio";
+import CryptoJS from "crypto-js";
 
 export const cadastrarPessoa = async (req: Request, res: Response) => {
-  const { nome, senha, telefone, sugestaoPresente } = req.body;
+  let { nome, senha, telefone, sugestaoPresente } = req.body;
+  senha = CryptoJS.AES.decrypt(senha, process.env.PW_SECRET as string).toString(
+    CryptoJS.enc.Utf8
+  );
   try {
     const participante = new Pessoa(nome, senha, telefone, sugestaoPresente);
     const cadastroResponse = await participante.cadastrar();

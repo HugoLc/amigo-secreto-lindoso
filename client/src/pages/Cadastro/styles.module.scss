@@ -1,0 +1,21 @@
+main.main-cadastro {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+  .form-cadastro {
+    border: 1px solid gray;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 5px;
+
+    .form-line {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 0;
+
+      textarea {
+        resize: vertical;
+      }
+    }
+  }
+}

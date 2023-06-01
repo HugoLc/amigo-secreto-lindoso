@@ -82,10 +82,16 @@ export default class Sorteio {
     }
   }
 
-  async listarParticipantes(): Promise<void> {
-    await this.buscarBd();
-    const amigosSorteados = await this.sortear();
-    // console.log(amigosSorteados);
-    this.atualizarBd(amigosSorteados);
+  async listarParticipantes(): Promise<{ status: number; message: string }> {
+    try {
+      await this.buscarBd();
+      const amigosSorteados = await this.sortear();
+      // console.log(amigosSorteados);
+      await this.atualizarBd(amigosSorteados);
+
+      return { status: 200, message: "Sorteio realizado com sucesso" };
+    } catch (error: any) {
+      return { status: 500, message: error.message };
+    }
   }
 }

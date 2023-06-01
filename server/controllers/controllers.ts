@@ -54,9 +54,9 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
 export const sortearAmigoSecreto = async (req: Request, res: Response) => {
   try {
     const sorteio = new Sorteio();
-    await sorteio.listarParticipantes();
-    // console.log("resultado sorteio", sorteio);
+    const sorteioResp = await sorteio.listarParticipantes();
+    res.status(sorteioResp.status).json({ message: sorteioResp.message });
   } catch (error: any) {
-    console.log(error.message);
+    return res.status(500).json({ message: error.message });
   }
 };

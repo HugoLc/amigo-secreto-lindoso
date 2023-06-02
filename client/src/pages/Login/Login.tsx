@@ -24,8 +24,13 @@ const validationSchema = Yup.object({
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const storageToken = useMemo<string | null>(() => {
-    const token = localStorage.getItem("amigoSecretoToken");
-    return token ? token : null;
+    if (localStorage.getItem("amigoSecretoToken")) {
+      const { token } = JSON.parse(
+        localStorage.getItem("amigoSecretoToken") as string
+      );
+      return token;
+    }
+    return null;
   }, []);
 
   const [hasValidToken, setHasValidToken] = useState(false);
@@ -78,7 +83,10 @@ const Login: React.FC = () => {
     try {
       const response = await api.post("/login", payload);
       const data = response.data;
-      localStorage.setItem("amigoSecretoToken", data.token);
+      localStorage.setItem(
+        "amigoSecretoToken",
+        JSON.stringify({ username, token: data.token })
+      );
       navigate(`/amigo-secreto/${username}`);
     } catch (error: any) {
       alert("Acesso Negado");
@@ -87,7 +95,11 @@ const Login: React.FC = () => {
   };
 
   if (hasValidToken) {
-    navigate("/amigo-secreto/front");
+    // TODO: salvar no storage o valor do participante
+    const { username } = JSON.parse(
+      localStorage.getItem("amigoSecretoToken") as string
+    );
+    navigate(`/amigo-secreto/${username}`);
     return <></>;
   }
 

@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./Login.module.scss";
 import { encryptPassword } from "../../utils/utils";
 import api from "../../service/api";
 import { useNavigate } from "react-router-dom";
+import LoginContext from "../../context/LoginContext";
 
 interface LoginFormValues {
   username: string;
@@ -22,6 +23,7 @@ const validationSchema = Yup.object({
 });
 
 const Login: React.FC = () => {
+  const loginContext = useContext(LoginContext);
   const navigate = useNavigate();
   const storageToken = useMemo<string | null>(() => {
     if (localStorage.getItem("amigoSecretoToken")) {
@@ -87,6 +89,7 @@ const Login: React.FC = () => {
         "amigoSecretoToken",
         JSON.stringify({ username, token: data.token })
       );
+      loginContext?.setIsLogged(true);
       navigate(`/amigo-secreto/${username}`);
     } catch (error: any) {
       alert("Acesso Negado");
@@ -95,10 +98,10 @@ const Login: React.FC = () => {
   };
 
   if (hasValidToken) {
-    // TODO: salvar no storage o valor do participante
     const { username } = JSON.parse(
       localStorage.getItem("amigoSecretoToken") as string
     );
+    loginContext?.setIsLogged(true);
     navigate(`/amigo-secreto/${username}`);
     return <></>;
   }

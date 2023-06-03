@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import styles from "./Cadastro.module.scss";
 import CryptoJS from "crypto-js";
 import api from "../../service/api";
 import { encryptPassword } from "../../utils/utils";
+import MessageModal from "../../components/MessageModal/MessageModal";
 
 const Cadastro: React.FC = () => {
+  const [showModal, setShowModal] = useState<boolean | undefined>();
+  const [isSucces, setIsSucces] = useState<boolean | undefined>();
+  const [modalMsg, setModalMsg] = useState<string>("");
+
   const initialValues = {
     name: "",
     password: "",
@@ -27,13 +32,19 @@ const Cadastro: React.FC = () => {
     };
     try {
       const response = await api.post("/cadastrar", payload);
-      console.log(response);
-      // TODO: mensagem de sucesso
-      // TODO: refresh
-    } catch (error) {
-      // TODO mensagem de erro
+      setIsSucces(true);
+      setModalMsg("Cadastrado com sucesso!");
+      window.location.reload();
+    } catch (error: any) {
+      setIsSucces(false);
+      if (error.response.data.message.includes("duplicate")) {
+        setModalMsg("Erro no cadastro. Usuario já cadastrado");
+      } else {
+        setModalMsg("Erro no cadastro. Tente novamente!");
+      }
       console.error(error);
     }
+    setShowModal(true);
   };
 
   const validateForm = (values: any) => {
@@ -61,6 +72,12 @@ const Cadastro: React.FC = () => {
 
   return (
     <main className={styles["main-cadastro"]}>
+      <MessageModal
+        isSucces={isSucces}
+        message={modalMsg}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
       <Formik
         initialValues={initialValues}
         validate={validateForm}

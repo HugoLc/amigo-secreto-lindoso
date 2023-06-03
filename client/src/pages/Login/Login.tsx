@@ -39,13 +39,11 @@ const Login: React.FC = () => {
 
   const checkToken = async () => {
     try {
-      console.log("entrou try");
       const response = await api.get("/checktoken", {
         headers: {
           Authorization: `${storageToken}`,
         },
       });
-      console.log("response");
       console.log(response);
       return true;
     } catch (error: any) {
@@ -55,10 +53,8 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("AQUI");
     const validateToken = async () => {
       if (storageToken) {
-        console.log("entrou if");
         const isValid = await checkToken();
 
         setHasValidToken(isValid);
@@ -68,9 +64,6 @@ const Login: React.FC = () => {
     validateToken();
   }, [storageToken]);
 
-  useEffect(() => {
-    console.log({ hasValidToken });
-  }, [hasValidToken]);
 
   const handleSubmit = async (values: LoginFormValues) => {
     const { username, password } = values;

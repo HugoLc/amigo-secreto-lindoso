@@ -88,7 +88,6 @@ export default class Sorteio {
       const amigosSorteados = await this.sortear();
       // console.log(amigosSorteados);
       await this.atualizarBd(amigosSorteados);
-
       return { status: 200, message: "Sorteio realizado com sucesso" };
     } catch (error: any) {
       return { status: 500, message: error.message };

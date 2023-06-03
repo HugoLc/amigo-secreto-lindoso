@@ -28,7 +28,10 @@ const Cadastro: React.FC = () => {
     try {
       const response = await api.post("/cadastrar", payload);
       console.log(response);
+      // TODO: mensagem de sucesso
+      // TODO: refresh
     } catch (error) {
+      // TODO mensagem de erro
       console.error(error);
     }
   };

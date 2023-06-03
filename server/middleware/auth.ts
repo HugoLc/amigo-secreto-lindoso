@@ -37,7 +37,7 @@ export function verificarToken(req: Request, res: Response, next: any) {
     if (error instanceof jwt.TokenExpiredError) {
       res.status(403).json({ message: "Token de autenticação expirado" });
     } else if (error instanceof URIError) {
-      res.status(403).json({ message: error.message });
+      res.status(401).json({ message: error.message });
     } else {
       // Token inválido ou erro de decodificação, retornar erro de autenticação
       res.status(401).json({ message: "Token de autenticação inválido" });

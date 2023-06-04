@@ -15,7 +15,6 @@ const MessageModal: React.FC<ModalProps> = ({
 }) => {
   useEffect(() => {
     if (setShowModal !== undefined) {
-      
       const timer = setTimeout(() => {
         setShowModal(false);
       }, 5000);
@@ -27,7 +26,10 @@ const MessageModal: React.FC<ModalProps> = ({
   const modalClass = isSucces ? "success" : "error";
 
   return (
-    <div className={`modal ${showModal ? "show" : ""}`}>
+    <div
+      className={`modal ${showModal ? "show" : ""}`}
+      onClick={() => setShowModal(false)}
+    >
       <div className={`modal-content ${modalClass}`}>
         <span className="close">&times;</span>
         <p>{message}</p>

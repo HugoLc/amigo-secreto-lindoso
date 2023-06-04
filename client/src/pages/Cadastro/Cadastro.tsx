@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import styles from "./Cadastro.module.scss";
-import CryptoJS from "crypto-js";
 import api from "../../service/api";
 import { encryptPassword } from "../../utils/utils";
 import MessageModal from "../../components/MessageModal/MessageModal";
 
 const Cadastro: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean | undefined>();
-  const [isSucces, setIsSucces] = useState<boolean | undefined>();
+  const [isSucces, setIsSuccess] = useState<boolean | undefined>();
   const [modalMsg, setModalMsg] = useState<string>("");
 
   const initialValues = {
@@ -30,19 +29,19 @@ const Cadastro: React.FC = () => {
       telefone: phone,
       sugestaoPresente: suggestion,
     };
+
     try {
-      const response = await api.post("/cadastrar", payload);
-      setIsSucces(true);
+      await api.post("/cadastrar", payload);
+      setIsSuccess(true);
       setModalMsg("Cadastrado com sucesso!");
       window.location.reload();
     } catch (error: any) {
-      setIsSucces(false);
-      if (error.response.data.message.includes("duplicate")) {
-        setModalMsg("Erro no cadastro. Usuario já cadastrado");
+      setIsSuccess(false);
+      if (error?.response?.data?.message?.includes("duplicate")) {
+        setModalMsg("Erro no cadastro. Usuário já cadastrado");
       } else {
         setModalMsg("Erro no cadastro. Tente novamente!");
       }
-      console.error(error);
     }
     setShowModal(true);
   };

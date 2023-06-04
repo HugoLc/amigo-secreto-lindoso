@@ -49,7 +49,6 @@ const ParticipantePage = () => {
   };
 
   useEffect(() => {
-    console.log("useeffect");
     getAmigoSecreto();
   }, []);
 
@@ -60,7 +59,11 @@ const ParticipantePage = () => {
       <main>
         <h1>Olá, {id}</h1>
         <p>Seu amigo secreto é: {amigoInfo.nome}</p>
-        <p>A sugestão de presente para ele é: {amigoInfo.sugestaoPresente}</p>
+        {amigoInfo.sugestaoPresente ? (
+          <p>A sugestão de presente para ele é: {amigoInfo.sugestaoPresente}</p>
+        ) : (
+          <p>{`Seu amigo secreto não deixou uma sugestão de presente. :(`}</p>
+        )}
       </main>
     );
   }

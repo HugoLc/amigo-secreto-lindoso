@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Pessoa from "../model/Pessoa";
 import Sorteio from "../model/Sorteio";
 import CryptoJS from "crypto-js";
+import Participantes from "../model/pessoa.models";
 
 export const cadastrarPessoa = async (req: Request, res: Response) => {
   let { nome, senha, telefone, sugestaoPresente } = req.body;
@@ -64,4 +65,12 @@ export const sortearAmigoSecreto = async (req: Request, res: Response) => {
 };
 export const checkToken = async (req: Request, res: Response) => {
   res.status(200).json("validated");
+};
+export const getNomesParticipantes = async (req: Request, res: Response) => {
+  try {
+    const plantasMed = await Participantes.find().select("nome");
+    res.status(200).json(plantasMed);
+  } catch (error: any) {
+    res.status(404).json({ message: error.message });
+  }
 };

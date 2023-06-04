@@ -33,7 +33,7 @@ export function verificarToken(req: Request, res: Response, next: any) {
       next();
     }
   } catch (error) {
-    console.log({ error });
+    // console.log({ error });
     if (error instanceof jwt.TokenExpiredError) {
       res.status(403).json({ message: "Token de autenticação expirado" });
     } else if (error instanceof URIError) {

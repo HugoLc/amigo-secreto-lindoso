@@ -4,6 +4,7 @@ import styles from "./Cadastro.module.scss";
 import api from "../../service/api";
 import { encryptPassword } from "../../utils/utils";
 import MessageModal from "../../components/MessageModal/MessageModal";
+import ListaParticipantes from "../../components/ListaParticipantes/ListaParticipantes";
 
 const Cadastro: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean | undefined>();
@@ -70,47 +71,50 @@ const Cadastro: React.FC = () => {
   };
 
   return (
-    <main className={styles["main-cadastro"]}>
-      <MessageModal
-        isSucces={isSucces}
-        message={modalMsg}
-        showModal={showModal}
-        setShowModal={setShowModal}
-      />
-      <Formik
-        initialValues={initialValues}
-        validate={validateForm}
-        onSubmit={handleSubmit}
-      >
-        <Form className={styles["form-cadastro"]}>
-          <h1>Participe do amigo secreto 2023</h1>
-          <div className={styles["form-line"]}>
-            <label htmlFor="name">Nome:</label>
-            <Field type="text" id="name" name="name" />
-            <ErrorMessage name="name" component="div" />
-          </div>
+    <>
+      <ListaParticipantes />
+      <main className={styles["main-cadastro"]}>
+        <MessageModal
+          isSucces={isSucces}
+          message={modalMsg}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+        <Formik
+          initialValues={initialValues}
+          validate={validateForm}
+          onSubmit={handleSubmit}
+        >
+          <Form className={styles["form-cadastro"]}>
+            <h1>Participe do amigo secreto 2023</h1>
+            <div className={styles["form-line"]}>
+              <label htmlFor="name">Nome:</label>
+              <Field type="text" id="name" name="name" />
+              <ErrorMessage name="name" component="div" />
+            </div>
 
-          <div className={styles["form-line"]}>
-            <label htmlFor="password">Senha:</label>
-            <Field type="password" id="password" name="password" />
-            <ErrorMessage name="password" component="div" />
-          </div>
+            <div className={styles["form-line"]}>
+              <label htmlFor="password">Senha:</label>
+              <Field type="password" id="password" name="password" />
+              <ErrorMessage name="password" component="div" />
+            </div>
 
-          <div className={styles["form-line"]}>
-            <label htmlFor="phone">Telefone:</label>
-            <Field type="text" id="phone" name="phone" />
-            <ErrorMessage name="phone" component="div" />
-          </div>
+            <div className={styles["form-line"]}>
+              <label htmlFor="phone">Telefone:</label>
+              <Field type="text" id="phone" name="phone" />
+              <ErrorMessage name="phone" component="div" />
+            </div>
 
-          <div className={styles["form-line"]}>
-            <label htmlFor="suggestion">Sugestão de presente:</label>
-            <Field as="textarea" id="suggestion" name="suggestion" />
-          </div>
+            <div className={styles["form-line"]}>
+              <label htmlFor="suggestion">Sugestão de presente:</label>
+              <Field as="textarea" id="suggestion" name="suggestion" />
+            </div>
 
-          <button type="submit">Enviar</button>
-        </Form>
-      </Formik>
-    </main>
+            <button type="submit">Enviar</button>
+          </Form>
+        </Formik>
+      </main>
+    </>
   );
 };
 

@@ -25,7 +25,7 @@ const ListaParticipantes = () => {
   if (!participantes) return null;
   return (
     <div>
-      Lista de participantes
+      Participantes até o momento
       <ul>
         {participantes &&
           participantes.map((participante) => (

@@ -5,33 +5,43 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import apiRoutes from "./routes/routes";
-import path from "path"
+import path from "path";
 
 dotenv.config();
+
+var whitelist = ["http://localhost:3000"];
+var corsOptions = {
+  origin: function (origin: any, callback: any) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS").message);
+    }
+  },
+};
+
 const app = express();
 app.use(bodyParser.json()); //definindo tamanho limite das requisições
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use("/api", apiRoutes); // cada rota dentro de apiRoutes vai iniciar com /api
 
-const _dirname = path.dirname("")
-const buildPath = path.join(_dirname  , "../client/build");
+const _dirname = path.dirname("");
+const buildPath = path.join(_dirname, "../client/build");
 
-app.use(express.static(buildPath))
+app.use(express.static(buildPath));
 
-app.get("/*", function(req, res){
-
-    res.sendFile(
-        path.join(__dirname, "../client/build/index.html"),
-        function (err) {
-          if (err) {
-            res.status(500).send(err);
-          }
-        }
-      );
-
-})
+app.get("/*", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "../client/build/index.html"),
+    function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
 
 /* const MONGODB_URI =
   "mongodb+srv://hugolc:qweasd123@cluster0.ilbnty4.mongodb.net/tudo-mato?retryWrites=true"; */

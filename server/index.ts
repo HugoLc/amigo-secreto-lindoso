@@ -6,7 +6,6 @@ import helmet from "helmet";
 import dotenv from "dotenv";
 import apiRoutes from "./routes/routes";
 import path from "path";
-import path from "path";
 
 dotenv.config();
 
@@ -31,8 +30,6 @@ app.use(cors(corsOptions));
 app.use(helmet());
 app.use("/api", apiRoutes); // cada rota dentro de apiRoutes vai iniciar com /api
 
-const _dirname = path.dirname("");
-const buildPath = path.join(_dirname, "../client/build");
 const _dirname = path.dirname("");
 const buildPath = path.join(_dirname, "../client/build");
 

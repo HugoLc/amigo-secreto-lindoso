@@ -34,7 +34,20 @@ app.use(
     contentSecurityPolicy: {
       useDefaults: true,
       directives: {
-        "script-src": ["'self'", "google.com"],
+        "script-src": [
+          "'self'",
+          "google.com",
+          "www.google.com",
+          "www.gstatic.com",
+          "gstatic.com",
+        ],
+        "frame-src": [
+          "'self'",
+          "google.com",
+          "www.google.com",
+          "www.gstatic.com",
+          "gstatic.com",
+        ],
       },
     },
   })

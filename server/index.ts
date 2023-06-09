@@ -29,7 +29,16 @@ const corsOptions: CorsOptions = {
 const app = express();
 app.use(bodyParser.json()); //definindo tamanho limite das requisições
 app.use(cors(corsOptions));
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "script-src": ["'self'", "google.com"],
+      },
+    },
+  })
+);
 
 const _dirname = path.dirname("");
 const buildPath = path.join(_dirname, "../client/build");

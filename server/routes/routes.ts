@@ -20,6 +20,6 @@ router.get(
   getAmigoSecreto
 );
 router.get("/sortear", sortearAmigoSecreto);
-router.get("", getNomesParticipantes)
+router.get("/nomes-participantes", getNomesParticipantes);
 
 export default router;

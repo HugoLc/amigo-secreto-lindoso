@@ -6,6 +6,7 @@ import { encryptPassword } from "../../utils/utils";
 import MessageModal from "../../components/MessageModal/MessageModal";
 import ListaParticipantes from "../../components/ListaParticipantes/ListaParticipantes";
 import { Helmet } from "react-helmet";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Cadastro: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean | undefined>();
@@ -51,6 +52,10 @@ const Cadastro: React.FC = () => {
   const validateForm = (values: any) => {
     const errors: any = {};
 
+    const recaptchaValue = (
+      document.getElementById("g-recaptcha-response") as HTMLInputElement
+    ).value;
+
     if (!values.name) {
       errors.name = "Nome é obrigatório";
     } else {
@@ -66,6 +71,10 @@ const Cadastro: React.FC = () => {
 
     if (!values.phone) {
       errors.phone = "Telefone é obrigatório";
+    }
+    if (!recaptchaValue) {
+      alert("Por favor, preencha o reCAPTCHA");
+      errors.captcha = "Validação pendente";
     }
 
     return errors;
@@ -113,6 +122,9 @@ const Cadastro: React.FC = () => {
               <label htmlFor="suggestion">Sugestão de presente:</label>
               <Field as="textarea" id="suggestion" name="suggestion" />
             </div>
+
+            <ReCAPTCHA sitekey="amigo-secreto-key" />
+            <ErrorMessage name="captcha" component="div" />
 
             <button type="submit">Enviar</button>
           </Form>

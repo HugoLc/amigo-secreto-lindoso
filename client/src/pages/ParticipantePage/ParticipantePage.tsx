@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../service/api";
+import { Helmet } from "react-helmet";
 
 interface IStorage {
   username: string;
@@ -76,6 +77,9 @@ const ParticipantePage = () => {
 
   return (
     <main>
+      <Helmet>
+        <title>Amigo secreto | {id}</title>
+      </Helmet>
       <h1>Olá, {id}</h1>
       <p>
         Seu amigo secreto ainda não foi sorteado. Aguarde a data do sorteio.

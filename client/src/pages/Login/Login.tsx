@@ -6,6 +6,7 @@ import { encryptPassword } from "../../utils/utils";
 import api from "../../service/api";
 import { useNavigate } from "react-router-dom";
 import LoginContext from "../../context/LoginContext";
+import { Helmet } from "react-helmet";
 
 interface LoginFormValues {
   username: string;
@@ -101,6 +102,9 @@ const Login: React.FC = () => {
 
   return (
     <main className={styles["main-login"]}>
+      <Helmet>
+        <title>Amigo secreto</title>
+      </Helmet>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

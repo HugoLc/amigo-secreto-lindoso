@@ -5,6 +5,7 @@ import api from "../../service/api";
 import { encryptPassword } from "../../utils/utils";
 import MessageModal from "../../components/MessageModal/MessageModal";
 import ListaParticipantes from "../../components/ListaParticipantes/ListaParticipantes";
+import { Helmet } from "react-helmet";
 
 const Cadastro: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean | undefined>();
@@ -72,6 +73,9 @@ const Cadastro: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Amigo secreto</title>
+      </Helmet>
       <ListaParticipantes />
       <main className={styles["main-cadastro"]}>
         <MessageModal

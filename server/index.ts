@@ -53,23 +53,24 @@ app.use(
   })
 );
 
-const _dirname = path.dirname("");
-const buildPath = path.join(_dirname, "../client/build");
-
-app.use(express.static(buildPath));
-
-app.get("/", function (req, res) {
-  res.sendFile(
-    path.join(__dirname, "../client/build/index.html"),
-    function (err) {
-      if (err) {
-        res.status(500).send(err);
-      }
-    }
-  );
-});
 app.use("/api", apiRoutes); // cada rota dentro de apiRoutes vai iniciar com /api
+if (process.env.ENVIROMENT === "prod") {
+  const _dirname = path.dirname("");
+  const buildPath = path.join(_dirname, "../client/build");
 
+  app.use(express.static(buildPath));
+
+  app.get("/*", function (req, res) {
+    res.sendFile(
+      path.join(__dirname, "../client/build/index.html"),
+      function (err) {
+        if (err) {
+          res.status(500).send(err);
+        }
+      }
+    );
+  });
+}
 
 const PORT = process.env.PORT || 6969;
 

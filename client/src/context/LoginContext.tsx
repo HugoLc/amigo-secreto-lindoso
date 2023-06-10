@@ -47,26 +47,30 @@ const LoginContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
   const getRoles = async () => {
-    if (isLogged) {
-      console.log("logado");
-      try {
-        const response = await api.get(`/roles/${storageUser}`, {
-          headers: {
-            Authorization: `${storageToken}`,
-          },
-        });
-        console.log(response);
-        const data = await response.data;
-        setRoles(data?.roles);
-      } catch (error: any) {
-        console.log(error.message);
-      }
+    console.log("logado");
+    try {
+      const response = await api.get(`/roles/${storageUser}`, {
+        headers: {
+          Authorization: `${storageToken}`,
+        },
+      });
+      console.log(response);
+      const data = await response.data;
+      setRoles(data?.roles);
+    } catch (error: any) {
+      console.log(error.message);
     }
   };
 
   useEffect(() => {
+    console.log("mudou logged", isLogged);
     checkToken();
     getRoles();
+  }, []);
+  useEffect(() => {
+    if (isLogged) {
+      getRoles();
+    }
   }, [isLogged]);
 
   return (

@@ -57,7 +57,6 @@ const Login: React.FC = () => {
     const validateToken = async () => {
       if (storageToken) {
         const isValid = await checkToken();
-
         setHasValidToken(isValid);
       }
     };

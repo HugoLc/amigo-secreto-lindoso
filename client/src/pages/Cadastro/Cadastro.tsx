@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage, useFormikContext } from "formik";
 import styles from "./Cadastro.module.scss";
 import api from "../../service/api";
 import { encryptPassword } from "../../utils/utils";
@@ -7,6 +7,14 @@ import MessageModal from "../../components/MessageModal/MessageModal";
 import ListaParticipantes from "../../components/ListaParticipantes/ListaParticipantes";
 import { Helmet } from "react-helmet";
 import ReCAPTCHA from "react-google-recaptcha";
+
+interface IFormValues {
+  name: string;
+  password: string;
+  phone: string;
+  suggestion: string;
+  recaptchaResponse: string | undefined;
+}
 
 const Cadastro: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean | undefined>();
@@ -18,7 +26,9 @@ const Cadastro: React.FC = () => {
     password: "",
     phone: "",
     suggestion: "",
+    recaptchaResponse: "",
   };
+  const { setFieldValue } = useFormikContext<IFormValues>();
 
   const handleSubmit = async (values: any) => {
     const { name, password, phone, suggestion } = values;
@@ -49,6 +59,10 @@ const Cadastro: React.FC = () => {
     setShowModal(true);
   };
 
+  const handleRecaptchaChange = (value: string | null) => {
+    setFieldValue("recaptchaResponse", value || undefined);
+  };
+
   const validateForm = (values: any) => {
     const errors: any = {};
 
@@ -72,7 +86,7 @@ const Cadastro: React.FC = () => {
     if (!values.phone) {
       errors.phone = "Telefone é obrigatório";
     }
-    if (!recaptchaValue) {
+    if (!values.recaptchaResponse) {
       errors.captcha = "Validação pendente";
     }
 
@@ -97,36 +111,41 @@ const Cadastro: React.FC = () => {
           validate={validateForm}
           onSubmit={handleSubmit}
         >
-          <Form className={styles["form-cadastro"]}>
-            <h1>Participe do amigo secreto 2023</h1>
-            <div className={styles["form-line"]}>
-              <label htmlFor="name">Nome:</label>
-              <Field type="text" id="name" name="name" />
-              <ErrorMessage name="name" component="div" />
-            </div>
+          {({ setFieldValue }) => (
+            <Form className={styles["form-cadastro"]}>
+              <h1>Participe do amigo secreto 2023</h1>
+              <div className={styles["form-line"]}>
+                <label htmlFor="name">Nome:</label>
+                <Field type="text" id="name" name="name" />
+                <ErrorMessage name="name" component="div" />
+              </div>
 
-            <div className={styles["form-line"]}>
-              <label htmlFor="password">Senha:</label>
-              <Field type="password" id="password" name="password" />
-              <ErrorMessage name="password" component="div" />
-            </div>
+              <div className={styles["form-line"]}>
+                <label htmlFor="password">Senha:</label>
+                <Field type="password" id="password" name="password" />
+                <ErrorMessage name="password" component="div" />
+              </div>
 
-            <div className={styles["form-line"]}>
-              <label htmlFor="phone">Telefone:</label>
-              <Field type="text" id="phone" name="phone" />
-              <ErrorMessage name="phone" component="div" />
-            </div>
+              <div className={styles["form-line"]}>
+                <label htmlFor="phone">Telefone:</label>
+                <Field type="text" id="phone" name="phone" />
+                <ErrorMessage name="phone" component="div" />
+              </div>
 
-            <div className={styles["form-line"]}>
-              <label htmlFor="suggestion">Sugestão de presente:</label>
-              <Field as="textarea" id="suggestion" name="suggestion" />
-            </div>
+              <div className={styles["form-line"]}>
+                <label htmlFor="suggestion">Sugestão de presente:</label>
+                <Field as="textarea" id="suggestion" name="suggestion" />
+              </div>
 
-            <ReCAPTCHA sitekey="6LfG7YMmAAAAAJwiKV7FsRbv_5QShDvF4G_RZD4q" />
-            <ErrorMessage name="captcha" component="div" />
+              <ReCAPTCHA
+                sitekey="6LfG7YMmAAAAAJwiKV7FsRbv_5QShDvF4G_RZD4q"
+                onChange={handleRecaptchaChange}
+              />
+              <ErrorMessage name="captcha" component="div" />
 
-            <button type="submit">Enviar</button>
-          </Form>
+              <button type="submit">Enviar</button>
+            </Form>
+          )}
         </Formik>
       </main>
     </>

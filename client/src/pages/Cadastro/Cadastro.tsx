@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Field, Form, ErrorMessage, useFormikContext } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import styles from "./Cadastro.module.scss";
 import api from "../../service/api";
 import { encryptPassword } from "../../utils/utils";
@@ -28,7 +28,6 @@ const Cadastro: React.FC = () => {
     suggestion: "",
     recaptchaResponse: "",
   };
-  const { setFieldValue } = useFormikContext<IFormValues>();
 
   const handleSubmit = async (values: any) => {
     const { name, password, phone, suggestion } = values;
@@ -59,16 +58,24 @@ const Cadastro: React.FC = () => {
     setShowModal(true);
   };
 
-  const handleRecaptchaChange = (value: string | null) => {
-    setFieldValue("recaptchaResponse", value || undefined);
+  const ReCaptchaField = ({ field, form }: any) => {
+    const handleRecaptchaChange = (value: string | null) => {
+      form.setFieldValue(field.name, value || undefined);
+    };
+
+    return (
+      <div>
+        <ReCAPTCHA
+          sitekey="SUA_CHAVE_DO_SITE"
+          onChange={handleRecaptchaChange}
+        />
+        <ErrorMessage name={field.name} component="div" />
+      </div>
+    );
   };
 
   const validateForm = (values: any) => {
     const errors: any = {};
-
-    const recaptchaValue = (
-      document.getElementById("g-recaptcha-response") as HTMLInputElement
-    ).value;
 
     if (!values.name) {
       errors.name = "Nome é obrigatório";
@@ -87,7 +94,7 @@ const Cadastro: React.FC = () => {
       errors.phone = "Telefone é obrigatório";
     }
     if (!values.recaptchaResponse) {
-      errors.captcha = "Validação pendente";
+      errors.recaptchaResponse = "Validação pendente";
     }
 
     return errors;
@@ -137,11 +144,7 @@ const Cadastro: React.FC = () => {
                 <Field as="textarea" id="suggestion" name="suggestion" />
               </div>
 
-              <ReCAPTCHA
-                sitekey="6LfG7YMmAAAAAJwiKV7FsRbv_5QShDvF4G_RZD4q"
-                onChange={handleRecaptchaChange}
-              />
-              <ErrorMessage name="captcha" component="div" />
+              <Field name="recaptchaResponse" component={ReCaptchaField} />
 
               <button type="submit">Enviar</button>
             </Form>

@@ -32,7 +32,6 @@ export const loginPessoa = async (req: Request, res: Response) => {
   try {
     const participante = new Pessoa(nome, senha);
     const loginResponse = await participante.login();
-    // console.log(loginResponse);
     res
       .status(loginResponse.status)
       .json({ message: loginResponse.message, token: loginResponse.token });
@@ -84,5 +83,20 @@ export const getRoles = async (req: Request, res: Response) => {
       .json({ roles: JSON.parse(rolesResponse.message) });
   } catch (error: any) {
     res.status(404).json({ message: error.message });
+  }
+};
+export const getDashboard = async (req: Request, res: Response) => {
+  const nome = req.params.admin;
+  try {
+    const participante = new Pessoa(nome);
+    const rolesResponse = await participante.getRoles();
+    const roles = JSON.parse(rolesResponse.message);
+    const isAdmin = roles.includes(0) || roles.includes(1);
+
+    res.status(rolesResponse.status).json({
+      isAdmin: isAdmin,
+    });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
   }
 };

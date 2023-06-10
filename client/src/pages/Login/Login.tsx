@@ -45,7 +45,6 @@ const Login: React.FC = () => {
           Authorization: `${storageToken}`,
         },
       });
-      console.log(response);
       return true;
     } catch (error: any) {
       console.log(error.message);

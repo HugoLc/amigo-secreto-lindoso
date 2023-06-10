@@ -39,7 +39,6 @@ const LoginContextProvider = ({ children }: { children: React.ReactNode }) => {
           Authorization: `${storageToken}`,
         },
       });
-      console.log(response);
       setIsLogged(true);
     } catch (error: any) {
       console.log(error.message);
@@ -47,14 +46,12 @@ const LoginContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
   const getRoles = async () => {
-    console.log("logado");
     try {
       const response = await api.get(`/roles/${storageUser}`, {
         headers: {
           Authorization: `${storageToken}`,
         },
       });
-      console.log(response);
       const data = await response.data;
       setRoles(data?.roles);
     } catch (error: any) {
@@ -63,7 +60,6 @@ const LoginContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    console.log("mudou logged", isLogged);
     checkToken();
     getRoles();
   }, []);

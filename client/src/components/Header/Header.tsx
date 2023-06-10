@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import LoginContext from "../../context/LoginContext";
@@ -6,6 +6,15 @@ import Logout from "./Logout";
 
 const Header = () => {
   const context = useContext(LoginContext);
+  const storageUser = useMemo<string | null>(() => {
+    if (localStorage.getItem("amigoSecretoToken")) {
+      const { username } = JSON.parse(
+        localStorage.getItem("amigoSecretoToken") as string
+      );
+      return username;
+    }
+    return null;
+  }, []);
 
   return (
     <div className={styles["header"]}>
@@ -14,7 +23,7 @@ const Header = () => {
           {context?.isLogged &&
           (context?.roles?.includes(0) || context?.roles?.includes(1)) ? (
             <li>
-              <Link to="/admin">Admin</Link>
+              <Link to={`/dashboard/${storageUser}`}>Admin</Link>
             </li>
           ) : null}
 

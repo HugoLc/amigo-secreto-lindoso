@@ -7,6 +7,7 @@ import {
   checkToken,
   getNomesParticipantes,
   getRoles,
+  getDashboard,
 } from "../controllers/controllers";
 import { verificarToken } from "../middleware/auth";
 
@@ -23,5 +24,6 @@ router.get(
 router.get("/sortear", sortearAmigoSecreto);
 router.get("/nomes-participantes", getNomesParticipantes);
 router.get("/roles/:participante", getRoles);
+router.get("/dashboard/:admin", verificarToken, getDashboard);
 
 export default router;

@@ -58,7 +58,6 @@ export default class Pessoa {
 
   async login(): Promise<IResponse> {
     const usuario = await Participantes.findOne({ nome: this._nome });
-    // console.log(usuario);
     if (!usuario) {
       return { status: 404, message: "Usuário não encontrado" };
     }
@@ -103,7 +102,6 @@ export default class Pessoa {
 
   async getAmigoSecreto(): Promise<IResponse> {
     const usuario = await Participantes.findOne({ nome: this._nome });
-    // console.log(usuario);
 
     if (!usuario) {
       return { status: 404, message: "Usuário não encontrado" };

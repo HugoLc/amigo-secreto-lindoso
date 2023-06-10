@@ -123,7 +123,7 @@ const Cadastro: React.FC = () => {
               <Field as="textarea" id="suggestion" name="suggestion" />
             </div>
 
-            <ReCAPTCHA sitekey="6Ldmb4EmAAAAAHyQkqFivzwSAwhH_vQTXovsWSla" />
+            <ReCAPTCHA sitekey="6LfG7YMmAAAAAJwiKV7FsRbv_5QShDvF4G_RZD4q" />
             <ErrorMessage name="captcha" component="div" />
 
             <button type="submit">Enviar</button>

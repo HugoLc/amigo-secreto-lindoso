@@ -20,19 +20,22 @@ export default class Pessoa {
   public _telefone?: string;
   public _sugestaoPresente?: string;
   public _amigoSecreto?: string;
+  public _roles?: number[];
 
   constructor(
     nome: string,
     senha?: string,
     telefone?: string,
     sugestaoPresente?: string,
-    amigoSecreto?: string
+    amigoSecreto?: string,
+    roles?: number[]
   ) {
     this._nome = nome;
     this._senha = senha || "";
     this._telefone = telefone;
     this._sugestaoPresente = sugestaoPresente;
     this._amigoSecreto = amigoSecreto;
+    this._roles = roles || [2]; //0- superadmin / 1- admin / 2- user
   }
 
   async cadastrar(): Promise<IResponse> {
@@ -42,6 +45,7 @@ export default class Pessoa {
       telefone: this._telefone,
       sugestaoPresente: this._sugestaoPresente,
       amigoSecreto: this._amigoSecreto,
+      roles: this._roles,
     });
 
     try {
@@ -124,5 +128,17 @@ export default class Pessoa {
       message: "Amigo secreto encontrado",
       amigoSecreto: amigoSecretoInfo,
     };
+  }
+
+  async getRoles(): Promise<IResponse> {
+    try {
+      const usuario = await Participantes.findOne({ nome: this._nome });
+      if (!usuario) {
+        return { status: 404, message: "Usuário não encontrado" };
+      }
+      return { status: 200, message: JSON.stringify(usuario.roles) };
+    } catch (error: any) {
+      return { status: 500, message: error.message };
+    }
   }
 }

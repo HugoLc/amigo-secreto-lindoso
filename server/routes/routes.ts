@@ -6,6 +6,7 @@ import {
   sortearAmigoSecreto,
   checkToken,
   getNomesParticipantes,
+  getRoles,
 } from "../controllers/controllers";
 import { verificarToken } from "../middleware/auth";
 
@@ -21,5 +22,6 @@ router.get(
 );
 router.get("/sortear", sortearAmigoSecreto);
 router.get("/nomes-participantes", getNomesParticipantes);
+router.get("/roles/:particioante", getRoles)
 
 export default router;

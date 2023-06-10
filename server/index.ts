@@ -70,8 +70,7 @@ app.get("/", function (req, res) {
 });
 app.use("/api", apiRoutes); // cada rota dentro de apiRoutes vai iniciar com /api
 
-/* const MONGODB_URI =
-  "mongodb+srv://hugolc:qweasd123@cluster0.ilbnty4.mongodb.net/tudo-mato?retryWrites=true"; */
+
 const PORT = process.env.PORT || 6969;
 
 mongoose

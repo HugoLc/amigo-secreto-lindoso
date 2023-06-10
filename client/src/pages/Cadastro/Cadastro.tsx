@@ -66,7 +66,7 @@ const Cadastro: React.FC = () => {
     return (
       <div>
         <ReCAPTCHA
-          sitekey="SUA_CHAVE_DO_SITE"
+          sitekey="6LfG7YMmAAAAAJwiKV7FsRbv_5QShDvF4G_RZD4q"
           onChange={handleRecaptchaChange}
         />
         <ErrorMessage name={field.name} component="div" />

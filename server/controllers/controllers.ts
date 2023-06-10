@@ -53,7 +53,6 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
 export const sortearAmigoSecreto = async (req: Request, res: Response) => {
   try {
     const sorteio = new Sorteio();
@@ -76,13 +75,13 @@ export const getNomesParticipantes = async (req: Request, res: Response) => {
 };
 export const getRoles = async (req: Request, res: Response) => {
   const nome = req.params.participante;
-  if(!nome) res.status(400).json({ message: "Participante não fornecido" });
+  if (!nome) res.status(400).json({ message: "Participante não fornecido" });
   try {
     const participante = new Pessoa(nome);
     const rolesResponse = await participante.getRoles();
     res
       .status(rolesResponse.status)
-      .json({ message: rolesResponse.message });
+      .json({ roles: JSON.parse(rolesResponse.message) });
   } catch (error: any) {
     res.status(404).json({ message: error.message });
   }

@@ -11,6 +11,13 @@ const Header = () => {
     <div className={styles["header"]}>
       <nav>
         <ul className={styles["nav-list"]}>
+          {context?.isLogged &&
+          (context?.roles?.includes(0) || context?.roles?.includes(1)) ? (
+            <li>
+              <Link to="/admin">Admin</Link>
+            </li>
+          ) : null}
+
           <li>
             <Link to="/">Cadastro</Link>
           </li>

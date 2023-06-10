@@ -22,6 +22,6 @@ router.get(
 );
 router.get("/sortear", sortearAmigoSecreto);
 router.get("/nomes-participantes", getNomesParticipantes);
-router.get("/roles/:particioante", getRoles)
+router.get("/roles/:participante", getRoles);
 
 export default router;

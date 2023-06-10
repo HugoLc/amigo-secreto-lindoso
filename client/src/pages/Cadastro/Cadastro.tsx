@@ -73,7 +73,6 @@ const Cadastro: React.FC = () => {
       errors.phone = "Telefone é obrigatório";
     }
     if (!recaptchaValue) {
-      alert("Por favor, preencha o reCAPTCHA");
       errors.captcha = "Validação pendente";
     }
 

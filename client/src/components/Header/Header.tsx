@@ -7,6 +7,7 @@ import Logout from "./Logout";
 const Header = () => {
   const context = useContext(LoginContext);
   const storageUser = useMemo<string | null>(() => {
+    console.log("mudou o memo");
     if (localStorage.getItem("amigoSecretoToken")) {
       const { username } = JSON.parse(
         localStorage.getItem("amigoSecretoToken") as string
@@ -14,7 +15,7 @@ const Header = () => {
       return username;
     }
     return null;
-  }, []);
+  }, [context]);
 
   return (
     <div className={styles["header"]}>

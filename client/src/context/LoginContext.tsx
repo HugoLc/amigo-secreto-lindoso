@@ -46,6 +46,7 @@ const LoginContextProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
   const getRoles = async () => {
+    if (!storageUser) return;
     try {
       const response = await api.get(`/roles/${storageUser}`, {
         headers: {

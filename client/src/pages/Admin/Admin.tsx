@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IStorage } from "../ParticipantePage/ParticipantePage";
 import api from "../../service/api";
+import ParticipnteItemForm from "../../components/ParticipanteItemForm/ParticipnteItemForm";
 
-interface IListaParticipantes {
+export interface IParticipante {
   nome: string;
   telefone: string;
   roles: number[];
@@ -14,7 +15,7 @@ const Admin = () => {
 
   const [isAdmin, setIsAdmin] = useState<boolean>();
   const [listaParticipantes, setListaParticipantes] =
-    useState<IListaParticipantes[]>();
+    useState<IParticipante[]>();
 
   const storageValue = useMemo<IStorage | null>(() => {
     if (localStorage.getItem("amigoSecretoToken")) {
@@ -56,11 +57,7 @@ const Admin = () => {
         <ul>
           {listaParticipantes &&
             listaParticipantes.map((participante) => (
-              <li>
-                <span>{participante.nome} | </span>
-                <span>{participante.telefone} | </span>
-                <span>{JSON.stringify(participante.roles)} </span>
-              </li>
+              <ParticipnteItemForm participante={participante} />
             ))}
         </ul>
       </div>

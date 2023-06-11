@@ -63,7 +63,6 @@ const Login: React.FC = () => {
     validateToken();
   }, [storageToken]);
 
-
   const handleSubmit = async (values: LoginFormValues) => {
     const { username, password } = values;
     const criptSenha = encryptPassword(
@@ -82,7 +81,7 @@ const Login: React.FC = () => {
         JSON.stringify({ username, token: data.token })
       );
       loginContext?.setIsLogged(true);
-      navigate(`/amigo-secreto/${username}`);
+      window.location.pathname = `/amigo-secreto/${username}`;
     } catch (error: any) {
       alert("Acesso Negado");
       console.error("ERROU", error.message);

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { IParticipante } from "../../pages/Admin/Admin";
+import api from "../../service/api";
 
 interface IProps {
   participante: IParticipante;
@@ -16,10 +17,21 @@ const ParticipnteItemForm = ({ participante }: IProps) => {
 
   const [disableSubmit, setDisableSubmit] = useState(true);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Form submitted!", adminState);
-    // TODO: roda de atualizar cadastro de participantes recebendo o nome do participante e atualizando o registro de roles
+    const payload = {
+      roles: adminState ? [1, 2] : [2],
+    };
+
+    try {
+      console.log("estrei");
+      const resp = await api.patch(`/atualizar/${participante.nome}`, payload);
+      const data = resp.data;
+      console.log("update", data);
+      // window.location.reload();
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {

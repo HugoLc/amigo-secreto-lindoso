@@ -8,6 +8,7 @@ import {
   getNomesParticipantes,
   getRoles,
   getDashboard,
+  atualizarParticipante,
 } from "../controllers/controllers";
 import { verificarToken } from "../middleware/auth";
 
@@ -21,6 +22,7 @@ router.get(
   verificarToken,
   getAmigoSecreto
 );
+router.patch("/atualizar/:participante", atualizarParticipante);
 router.get("/sortear", sortearAmigoSecreto);
 router.get("/nomes-participantes", getNomesParticipantes);
 router.get("/roles/:participante", getRoles);

@@ -22,7 +22,7 @@ const corsOptions: CorsOptions = {
     "http://amigo-secreto.app.br",
     "https://amigo-secreto.app.br",
   ], // Altere para os domínios permitidos
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 

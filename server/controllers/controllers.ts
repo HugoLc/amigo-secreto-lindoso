@@ -52,6 +52,28 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
     return res.status(500).json({ message: error.message });
   }
 };
+export const atualizarParticipante = async (req: Request, res: Response) => {
+  const nome = req.params.participante;
+  const { roles /* , confirmado */ } = req.body;
+
+  console.log({ nome, roles });
+  try {
+    const participante = new Pessoa(
+      nome,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      roles
+    );
+    const atualizarResponse = await participante.atualizar();
+    res.status(atualizarResponse.status).json({
+      message: atualizarResponse.message,
+    });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 export const sortearAmigoSecreto = async (req: Request, res: Response) => {
   try {
     const sorteio = new Sorteio();

@@ -56,6 +56,32 @@ export default class Pessoa {
     }
   }
 
+  async atualizar(): Promise<IResponse> {
+    try {
+      const registro = await Participantes.findOne({ nome: this._nome });
+
+      if (!registro) {
+        return { status: 404, message: "Registro não encontrado." };
+      }
+
+      // Atualize os campos desejados
+      if (this._roles) {
+        registro.roles = this._roles;
+      }
+
+      // if (this._confirmado) {
+      //   registro.confirmado = this._confirmado;
+      // }
+
+      // Salve as alterações
+      await registro.save();
+
+      return { status: 200, message: "Registro atualizado com sucesso." };
+    } catch (error: any) {
+      return { status: 404, message: error.message };
+    }
+  }
+
   async login(): Promise<IResponse> {
     const usuario = await Participantes.findOne({ nome: this._nome });
     if (!usuario) {

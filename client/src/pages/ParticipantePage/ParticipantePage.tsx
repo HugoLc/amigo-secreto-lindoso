@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../../service/api";
 import { Helmet } from "react-helmet";
 
-interface IStorage {
+export interface IStorage {
   username: string;
   token: string;
 }

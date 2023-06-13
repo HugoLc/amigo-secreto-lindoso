@@ -7,6 +7,7 @@ const participantesSchema = new mongoose.Schema({
   telefone: { type: String, required: true },
   sugestaoPresente: String,
   amigoSecreto: String,
+  roles: [Number]
 });
 
 participantesSchema.pre("save", function (next) {

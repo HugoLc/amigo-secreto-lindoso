@@ -10,7 +10,6 @@ export default class Sorteio {
   }
 
   async sortear(): Promise<Pessoa[]> {
-    // console.log(this.participantes);
     const listaNomesParticipantes = this.participantes?.map(({ _nome }) => {
       return _nome;
     });
@@ -86,7 +85,6 @@ export default class Sorteio {
     try {
       await this.buscarBd();
       const amigosSorteados = await this.sortear();
-      // console.log(amigosSorteados);
       await this.atualizarBd(amigosSorteados);
       return { status: 200, message: "Sorteio realizado com sucesso" };
     } catch (error: any) {

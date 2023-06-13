@@ -32,7 +32,6 @@ export const loginPessoa = async (req: Request, res: Response) => {
   try {
     const participante = new Pessoa(nome, senha);
     const loginResponse = await participante.login();
-    // console.log(loginResponse);
     res
       .status(loginResponse.status)
       .json({ message: loginResponse.message, token: loginResponse.token });
@@ -53,7 +52,28 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
     return res.status(500).json({ message: error.message });
   }
 };
+export const atualizarParticipante = async (req: Request, res: Response) => {
+  const nome = req.params.participante;
+  const { roles /* , confirmado */ } = req.body;
 
+  console.log({ nome, roles });
+  try {
+    const participante = new Pessoa(
+      nome,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      roles
+    );
+    const atualizarResponse = await participante.atualizar();
+    res.status(atualizarResponse.status).json({
+      message: atualizarResponse.message,
+    });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 export const sortearAmigoSecreto = async (req: Request, res: Response) => {
   try {
     const sorteio = new Sorteio();
@@ -68,9 +88,48 @@ export const checkToken = async (req: Request, res: Response) => {
 };
 export const getNomesParticipantes = async (req: Request, res: Response) => {
   try {
-    const plantasMed = await Participantes.find().select("nome");
-    res.status(200).json(plantasMed);
+    const nomesParticipantes = await Participantes.find().select("nome");
+    res.status(200).json(nomesParticipantes);
   } catch (error: any) {
     res.status(404).json({ message: error.message });
+  }
+};
+export const getRoles = async (req: Request, res: Response) => {
+  const nome = req.params.participante;
+  if (!nome) res.status(400).json({ message: "Participante não fornecido" });
+  try {
+    const participante = new Pessoa(nome);
+    const rolesResponse = await participante.getRoles();
+    res
+      .status(rolesResponse.status)
+      .json({ roles: JSON.parse(rolesResponse.message) });
+  } catch (error: any) {
+    res.status(404).json({ message: error.message });
+  }
+};
+export const getDashboard = async (req: Request, res: Response) => {
+  const nome = req.params.admin;
+  try {
+    const participante = new Pessoa(nome);
+    const rolesResponse = await participante.getRoles();
+    const roles = JSON.parse(rolesResponse.message);
+    const isAdmin = roles.includes(0) || roles.includes(1);
+
+    if (!isAdmin) {
+      res.status(rolesResponse.status).json({
+        isAdmin: isAdmin,
+      });
+    }
+
+    const listaParticipantes = await Participantes.find({
+      roles: { $ne: 0 },
+    }).select("nome telefone roles");
+
+    res.status(rolesResponse.status).json({
+      isAdmin: isAdmin,
+      listaParticipantes,
+    });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
   }
 };

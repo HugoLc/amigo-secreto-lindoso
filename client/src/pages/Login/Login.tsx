@@ -45,7 +45,6 @@ const Login: React.FC = () => {
           Authorization: `${storageToken}`,
         },
       });
-      console.log(response);
       return true;
     } catch (error: any) {
       console.log(error.message);
@@ -57,14 +56,12 @@ const Login: React.FC = () => {
     const validateToken = async () => {
       if (storageToken) {
         const isValid = await checkToken();
-
         setHasValidToken(isValid);
       }
     };
 
     validateToken();
   }, [storageToken]);
-
 
   const handleSubmit = async (values: LoginFormValues) => {
     const { username, password } = values;
@@ -84,7 +81,7 @@ const Login: React.FC = () => {
         JSON.stringify({ username, token: data.token })
       );
       loginContext?.setIsLogged(true);
-      navigate(`/amigo-secreto/${username}`);
+      window.location.pathname = `/amigo-secreto/${username}`;
     } catch (error: any) {
       alert("Acesso Negado");
       console.error("ERROU", error.message);

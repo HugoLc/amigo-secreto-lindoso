@@ -22,7 +22,7 @@ const corsOptions: CorsOptions = {
     "http://amigo-secreto.app.br",
     "https://amigo-secreto.app.br",
   ], // Altere para os domínios permitidos
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
@@ -53,25 +53,25 @@ app.use(
   })
 );
 
-const _dirname = path.dirname("");
-const buildPath = path.join(_dirname, "../client/build");
-
-app.use(express.static(buildPath));
-
-app.get("/", function (req, res) {
-  res.sendFile(
-    path.join(__dirname, "../client/build/index.html"),
-    function (err) {
-      if (err) {
-        res.status(500).send(err);
-      }
-    }
-  );
-});
 app.use("/api", apiRoutes); // cada rota dentro de apiRoutes vai iniciar com /api
+if (process.env.ENVIROMENT === "prod") {
+  const _dirname = path.dirname("");
+  const buildPath = path.join(_dirname, "../client/build");
 
-/* const MONGODB_URI =
-  "mongodb+srv://hugolc:qweasd123@cluster0.ilbnty4.mongodb.net/tudo-mato?retryWrites=true"; */
+  app.use(express.static(buildPath));
+
+  app.get("/*", function (req, res) {
+    res.sendFile(
+      path.join(__dirname, "../client/build/index.html"),
+      function (err) {
+        if (err) {
+          res.status(500).send(err);
+        }
+      }
+    );
+  });
+}
+
 const PORT = process.env.PORT || 6969;
 
 mongoose

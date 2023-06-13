@@ -9,7 +9,6 @@ export function verificarToken(req: Request, res: Response, next: any) {
 
   if (!token) {
     // Se não houver token, retornar erro de autenticação
-    console.log("AQUI");
     return res
       .status(401)
       .json({ message: "Token de autenticação não fornecido" });
@@ -20,7 +19,6 @@ export function verificarToken(req: Request, res: Response, next: any) {
     const decodedToken = jwt.verify(token, process.env.SECRET as string) as {
       userId: string;
     };
-    console.log(decodedToken.userId);
 
     if (
       req.params.participante &&
@@ -33,7 +31,6 @@ export function verificarToken(req: Request, res: Response, next: any) {
       next();
     }
   } catch (error) {
-    // console.log({ error });
     if (error instanceof jwt.TokenExpiredError) {
       res.status(403).json({ message: "Token de autenticação expirado" });
     } else if (error instanceof URIError) {

@@ -8,6 +8,7 @@ export interface IParticipante {
   nome: string;
   telefone: string;
   roles: number[];
+  confirmado: boolean
 }
 
 const Admin = () => {

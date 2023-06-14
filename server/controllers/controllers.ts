@@ -54,9 +54,9 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
 };
 export const atualizarParticipante = async (req: Request, res: Response) => {
   const nome = req.params.participante;
-  const { roles /* , confirmado */ } = req.body;
+  const { roles, confirmado } = req.body;
 
-  console.log({ nome, roles });
+  console.log({ nome, roles, confirmado });
   try {
     const participante = new Pessoa(
       nome,
@@ -64,7 +64,8 @@ export const atualizarParticipante = async (req: Request, res: Response) => {
       undefined,
       undefined,
       undefined,
-      roles
+      roles,
+      confirmado
     );
     const atualizarResponse = await participante.atualizar();
     res.status(atualizarResponse.status).json({
@@ -123,7 +124,7 @@ export const getDashboard = async (req: Request, res: Response) => {
 
     const listaParticipantes = await Participantes.find({
       roles: { $ne: 0 },
-    }).select("nome telefone roles");
+    }).select("nome telefone roles confirmado");
 
     res.status(rolesResponse.status).json({
       isAdmin: isAdmin,

@@ -80,7 +80,7 @@ const Cadastro: React.FC = () => {
     if (!values.name) {
       errors.name = "Nome é obrigatório";
     } else {
-      values.name = values.name.toLowerCase();
+      values.name = values.name;
     }
 
     if (!values.password) {

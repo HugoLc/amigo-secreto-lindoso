@@ -21,6 +21,7 @@ export default class Pessoa {
   public _sugestaoPresente?: string;
   public _amigoSecreto?: string;
   public _roles?: number[];
+  public _confirmado?: boolean;
 
   constructor(
     nome: string,
@@ -28,7 +29,8 @@ export default class Pessoa {
     telefone?: string,
     sugestaoPresente?: string,
     amigoSecreto?: string,
-    roles?: number[]
+    roles?: number[],
+    confirmado?: boolean
   ) {
     this._nome = nome;
     this._senha = senha || "";
@@ -36,6 +38,7 @@ export default class Pessoa {
     this._sugestaoPresente = sugestaoPresente;
     this._amigoSecreto = amigoSecreto;
     this._roles = roles || [2]; //0- superadmin / 1- admin / 2- user
+    this._confirmado = confirmado;
   }
 
   async cadastrar(): Promise<IResponse> {
@@ -61,6 +64,7 @@ export default class Pessoa {
       const registro = await Participantes.findOne({ nome: this._nome });
 
       if (!registro) {
+        console.log("NAO ENCONTRADO");
         return { status: 404, message: "Registro não encontrado." };
       }
 
@@ -69,15 +73,16 @@ export default class Pessoa {
         registro.roles = this._roles;
       }
 
-      // if (this._confirmado) {
-      //   registro.confirmado = this._confirmado;
-      // }
-
+      if (this._confirmado) {
+        registro.confirmado = this._confirmado;
+      }
+      console.log({ registro });
       // Salve as alterações
       await registro.save();
 
       return { status: 200, message: "Registro atualizado com sucesso." };
     } catch (error: any) {
+      console.log(error.message);
       return { status: 404, message: error.message };
     }
   }

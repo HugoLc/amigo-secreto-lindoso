@@ -102,26 +102,38 @@ const Login: React.FC = () => {
       <Helmet>
         <title>Amigo secreto</title>
       </Helmet>
+      <img className="logo" src="/assets/amigo-secreto.svg" alt="" />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         <Form className={styles["form-login"]}>
-          <h1>Acesse sua página</h1>
+          <h1>Olá, digite seus dados para entrar ou clique em cadastrar:</h1>
           <div className={styles["form-line"]}>
             <label htmlFor="username">Usuário:</label>
             <Field type="text" id="username" name="username" />
-            <ErrorMessage name="username" component="div" />
+            <ErrorMessage
+              className={styles["error-label"]}
+              name="username"
+              component="div"
+            />
           </div>
 
           <div className={styles["form-line"]}>
             <label htmlFor="password">Senha:</label>
             <Field type="password" id="password" name="password" />
-            <ErrorMessage name="password" component="div" />
+            <ErrorMessage
+              className={styles["error-label"]}
+              name="password"
+              component="div"
+            />
           </div>
 
-          <button type="submit">Entrar</button>
+          <div className={styles["buttons-wrapper"]}>
+            <button onClick={() => navigate(`/cadastro`)}>Cadastrar</button>
+            <button type="submit">Entrar</button>
+          </div>
         </Form>
       </Formik>
     </main>

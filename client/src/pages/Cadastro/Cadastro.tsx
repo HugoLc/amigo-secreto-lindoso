@@ -69,7 +69,7 @@ const Cadastro: React.FC = () => {
           sitekey="6LfG7YMmAAAAAJwiKV7FsRbv_5QShDvF4G_RZD4q"
           onChange={handleRecaptchaChange}
         />
-        <ErrorMessage name={field.name} component="div" />
+        <ErrorMessage name={field.name} component="span" />
       </div>
     );
   };
@@ -124,19 +124,19 @@ const Cadastro: React.FC = () => {
               <div className={styles["form-line"]}>
                 <label htmlFor="name">Nome:</label>
                 <Field type="text" id="name" name="name" />
-                <ErrorMessage name="name" component="div" />
+                <ErrorMessage name="name" component="span" />
               </div>
 
               <div className={styles["form-line"]}>
                 <label htmlFor="password">Senha:</label>
                 <Field type="password" id="password" name="password" />
-                <ErrorMessage name="password" component="div" />
+                <ErrorMessage name="password" component="span" />
               </div>
 
               <div className={styles["form-line"]}>
                 <label htmlFor="phone">Telefone:</label>
                 <Field type="text" id="phone" name="phone" />
-                <ErrorMessage name="phone" component="div" />
+                <ErrorMessage name="phone" component="span" />
               </div>
 
               <div className={styles["form-line"]}>

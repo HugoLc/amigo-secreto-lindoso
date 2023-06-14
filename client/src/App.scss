@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Karma:wght@300;400;700&display=swap");
+
+body {
+  font-family: "Karma", serif;
+}
+label {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+
+  color: #590202;
+}
+
+input {
+  background: #d9d9d9;
+  border-radius: 10px;
+  height: 28px;
+  border: none;
+  font-size: 18px;
+  padding: 3px 9px;
+  outline: none;
+  color: #7d7c7c;
+  font-family: "Karma", serif;
+}
+
+h1 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+
+  color: #590202;
+}
+
+button {
+  background: #f2505d;
+  border-radius: 10px;
+  padding: 11px 11px 6px;
+  font-family: "Karma";
+  font-style: normal;
+  font-weight: 400;
+  //   height: 28px;
+  font-size: 15px;
+  line-height: 15px;
+  color: #f5f5f5;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    background: #bd3f4a;
+  }
+}
+
+.logo {
+  width: 232px;
+  height: 174px;
+  margin-bottom: 40px;
+}

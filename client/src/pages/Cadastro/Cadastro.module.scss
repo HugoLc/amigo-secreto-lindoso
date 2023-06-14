@@ -16,6 +16,11 @@ main.main-cadastro {
       textarea {
         resize: vertical;
       }
+      .error-label {
+        font-size: 13px;
+        color: red;
+        margin: 5px 0;
+      }
     }
   }
 }

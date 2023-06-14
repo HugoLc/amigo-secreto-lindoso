@@ -6,14 +6,16 @@ import ParticipantePage from "./pages/ParticipantePage/ParticipantePage";
 import Header from "./components/Header/Header";
 import { LoginContextProvider } from "./context/LoginContext";
 import Admin from "./pages/Admin/Admin";
+import "./App.scss";
 
 function App() {
   return (
     <LoginContextProvider>
       <Router>
-        <Header />
+        {/* <Header /> */}
         <Routes>
-          <Route path="/" element={<Cadastro />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/login" element={<Login />} />
           <Route path="/amigo-secreto/:id" element={<ParticipantePage />} />
           <Route path="/dashboard/:admin" element={<Admin />} />

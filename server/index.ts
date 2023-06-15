@@ -57,7 +57,8 @@ app.use("/api", apiRoutes); // cada rota dentro de apiRoutes vai iniciar com /ap
 if (process.env.ENVIROMENT === "prod") {
   const _dirname = path.dirname("");
   const buildPath = path.join(_dirname, "../client/build");
-
+  console.log("dir", _dirname);
+  console.log("build", buildPath);
   app.use(express.static(buildPath));
 
   app.get("/*", function (req, res) {

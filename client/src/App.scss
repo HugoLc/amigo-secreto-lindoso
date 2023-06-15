@@ -12,7 +12,8 @@ label {
   color: #590202;
 }
 
-input {
+input,
+textarea {
   background: #d9d9d9;
   border-radius: 10px;
   height: 28px;
@@ -22,6 +23,9 @@ input {
   outline: none;
   color: #7d7c7c;
   font-family: "Karma", serif;
+}
+textarea {
+  height: 100px;
 }
 
 h1 {
@@ -57,4 +61,15 @@ button {
   width: 232px;
   height: 174px;
   margin-bottom: 40px;
+}
+a,
+a:focus,
+a:active {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+
+  color: #590202;
 }

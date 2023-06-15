@@ -7,6 +7,7 @@ import MessageModal from "../../components/MessageModal/MessageModal";
 import ListaParticipantes from "../../components/ListaParticipantes/ListaParticipantes";
 import { Helmet } from "react-helmet";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Link } from "react-router-dom";
 
 interface IFormValues {
   name: string;
@@ -105,8 +106,10 @@ const Cadastro: React.FC = () => {
       <Helmet>
         <title>Amigo secreto</title>
       </Helmet>
-      <ListaParticipantes />
+      {/* <ListaParticipantes /> */}
       <main className={styles["main-cadastro"]}>
+        <img className="logo" src="/assets/amigo-secreto.svg" alt="" />
+
         <MessageModal
           isSucces={isSucces}
           message={modalMsg}
@@ -146,7 +149,10 @@ const Cadastro: React.FC = () => {
 
               <Field name="recaptchaResponse" component={ReCaptchaField} />
 
-              <button type="submit">Enviar</button>
+              <div className={styles["buttons-wrapper"]}>
+                <Link to="/">Já possui uma conta?</Link>
+                <button type="submit">Enviar</button>
+              </div>
             </Form>
           )}
         </Formik>

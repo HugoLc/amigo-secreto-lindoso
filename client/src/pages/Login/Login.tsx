@@ -131,8 +131,8 @@ const Login: React.FC = () => {
           </div>
 
           <div className={styles["buttons-wrapper"]}>
-            <button onClick={() => navigate(`/cadastro`)}>Cadastrar</button>
             <button type="submit">Entrar</button>
+            <button onClick={() => navigate(`/cadastro`)}>Cadastrar</button>
           </div>
         </Form>
       </Formik>

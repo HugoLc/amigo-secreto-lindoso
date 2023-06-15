@@ -2,7 +2,11 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginContext from "../../context/LoginContext";
 
-const Logout = () => {
+interface IProps {
+  className?: string | undefined;
+}
+
+const Logout = ({ className }: IProps) => {
   const navigate = useNavigate();
   const loginContext = useContext(LoginContext);
 
@@ -11,7 +15,11 @@ const Logout = () => {
     loginContext?.setIsLogged(false);
     navigate("/login");
   };
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <button className={className} onClick={handleLogout}>
+      Sair
+    </button>
+  );
 };
 
 export default Logout;

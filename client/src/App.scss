@@ -61,7 +61,12 @@ button {
   width: 232px;
   height: 174px;
   margin-bottom: 40px;
+  &.logo-mini {
+    width: 157px;
+    height: 118px;
+  }
 }
+
 a,
 a:focus,
 a:active {
@@ -72,4 +77,8 @@ a:active {
   text-decoration: none;
 
   color: #590202;
+}
+
+.btn-sair {
+  width: 73px;
 }

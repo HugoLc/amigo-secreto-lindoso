@@ -53,57 +53,23 @@ app.use(
     },
   })
 );
-// app.use(serveStatic(path.join(__dirname, "../../client/build")));
-app.use(serveStatic(path.join(__dirname, "../../client/build")));
-app.use(
-  "/static",
-  express.static(path.join(__dirname, "../../client/build", "static"))
-);
-app.use(
-  "/assets",
-  express.static(path.join(__dirname, "../../client/build", "assets"))
-);
-console.log(
-  "PATH Assets",
-  path.join(__dirname, "../../client/build", "assets")
-);
+
 app.use("/api", apiRoutes); // cada rota dentro de apiRoutes vai iniciar com /api
 
 if (process.env.ENVIROMENT === "prod") {
-  // app.get("/", (req, res) => {
-  //   res.sendFile(path.join(__dirname, "../../client/build"));
-  // });
-
+  app.use(serveStatic(path.join(__dirname, "../../client/build")));
+  app.use(
+    "/static",
+    express.static(path.join(__dirname, "../../client/build", "static"))
+  );
+  app.use(
+    "/assets",
+    express.static(path.join(__dirname, "../../client/build", "assets"))
+  );
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
   });
-
-  // app.get("/cadastro", (req, res) => {
-  //   res.sendFile(path.join(__dirname, "../../client/build", "index.html"));
-  // });
-  // app.get("/static/*", (req, res) => {
-  //   res.sendFile(path.join(__dirname, "../../client/build/static"));
-  // });
-
-  // const _dirname = path.dirname("");
-  // const buildPath = path.join(_dirname, "../../client/build");
-  // console.log("dir", _dirname);
-  // console.log("build", buildPath);
-  // app.use(express.static(buildPath));
-
-  // app.get("/*", function (req, res) {
-  //   res.sendFile(
-  //     path.join(__dirname, "../../client/build/index.html"),
-  //     function (err) {
-  //       if (err) {
-  //         res.status(500).send(err);
-  //       }
-  //     }
-  //   );
-  // });
 }
-
-//////////////// DO JEIT QUE ESTÁ AS ROTAS DO REACT NAO FUNCIONAM AO CARREGAR SOZINHAS
 
 const PORT = process.env.PORT || 6969;
 

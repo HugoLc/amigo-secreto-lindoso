@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import styles from "./Cadastro.module.scss";
 import api from "../../service/api";
@@ -8,6 +8,7 @@ import ListaParticipantes from "../../components/ListaParticipantes/ListaPartici
 import { Helmet } from "react-helmet";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Link } from "react-router-dom";
+import LoginContext from "../../context/LoginContext";
 
 interface IFormValues {
   name: string;
@@ -18,6 +19,7 @@ interface IFormValues {
 }
 
 const Cadastro: React.FC = () => {
+  const loginContext = useContext(LoginContext);
   const [showModal, setShowModal] = useState<boolean | undefined>();
   const [isSucces, setIsSuccess] = useState<boolean | undefined>();
   const [modalMsg, setModalMsg] = useState<string>("");
@@ -47,7 +49,14 @@ const Cadastro: React.FC = () => {
       await api.post("/cadastrar", payload);
       setIsSuccess(true);
       setModalMsg("Cadastrado com sucesso!");
-      window.location.reload();
+      const response = await api.post("/login", payload);
+      const data = response.data;
+      localStorage.setItem(
+        "amigoSecretoToken",
+        JSON.stringify({ username: name, token: data.token })
+      );
+      loginContext?.setIsLogged(true);
+      window.location.pathname = `/amigo-secreto/${name}`;
     } catch (error: any) {
       setIsSuccess(false);
       if (error?.response?.data?.message?.includes("duplicate")) {

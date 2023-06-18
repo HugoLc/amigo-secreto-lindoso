@@ -37,10 +37,32 @@
           color: #590202;
         }
       }
-      .btn-wrapper {
-        display: flex;
-        justify-content: right;
-      }
     }
   }
+}
+
+.form-line {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+
+  textarea {
+    resize: vertical;
+  }
+  .error-label {
+    font-size: 13px;
+    color: red;
+    margin: 5px 0;
+  }
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+.btn-wrapper.space {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

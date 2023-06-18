@@ -76,6 +76,17 @@ export default class Pessoa {
       if (this._confirmado) {
         registro.confirmado = this._confirmado;
       }
+
+      if (this._telefone) {
+        registro.telefone = this._telefone;
+      }
+      if (this._sugestaoPresente) {
+        registro.sugestaoPresente = this._sugestaoPresente;
+      }
+
+      if (this._confirmado) {
+        registro.confirmado = this._confirmado;
+      }
       console.log({ registro });
       // Salve as alterações
       await registro.save();
@@ -166,6 +177,23 @@ export default class Pessoa {
         return { status: 404, message: "Usuário não encontrado" };
       }
       return { status: 200, message: JSON.stringify(usuario.roles) };
+    } catch (error: any) {
+      return { status: 500, message: error.message };
+    }
+  }
+  async getUser(): Promise<IResponse> {
+    try {
+      const usuario = await Participantes.findOne({ nome: this._nome }).select(
+        "nome sugestaoPresente"
+      );
+      if (!usuario) {
+        return { status: 404, message: "Usuário não encontrado" };
+      }
+      return {
+        status: 200,
+        message: "Retorno participante",
+        amigoSecreto: usuario,
+      };
     } catch (error: any) {
       return { status: 500, message: error.message };
     }

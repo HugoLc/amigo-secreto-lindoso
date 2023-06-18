@@ -9,6 +9,7 @@ import {
   getRoles,
   getDashboard,
   atualizarParticipante,
+  getUser,
 } from "../controllers/controllers";
 import { verificarToken } from "../middleware/auth";
 
@@ -22,10 +23,12 @@ router.get(
   verificarToken,
   getAmigoSecreto
 );
+//TODO: atualizar verificando o token
 router.patch("/atualizar/:participante", atualizarParticipante);
 router.get("/sortear", sortearAmigoSecreto);
 router.get("/nomes-participantes", getNomesParticipantes);
 router.get("/roles/:participante", getRoles);
+router.get("/participante/:participante", getUser);
 router.get("/dashboard/:admin", verificarToken, getDashboard);
 
 export default router;

@@ -37,7 +37,7 @@ h1 {
   color: #590202;
 }
 
-button {
+button:not(.btn-link) {
   background: #f2505d;
   border-radius: 10px;
   padding: 11px 11px 6px;
@@ -45,6 +45,7 @@ button {
   font-style: normal;
   font-weight: 400;
   //   height: 28px;
+  min-width: 73px;
   font-size: 15px;
   line-height: 15px;
   color: #f5f5f5;
@@ -55,6 +56,18 @@ button {
   &:hover {
     background: #bd3f4a;
   }
+}
+.btn-link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+  color: #590202;
 }
 
 .logo {

@@ -4,13 +4,15 @@ import api from "../../service/api";
 import { Helmet } from "react-helmet";
 import styles from "./ParticipantePage.module.scss";
 import Logout from "../../components/Header/Logout";
+import AmigoInfo from "../../components/AmigoInfo/AmigoInfo";
+import FormSugestao from "../../components/FormSugestao/FormSugestao";
 
 export interface IStorage {
   username: string;
   token: string;
 }
 
-interface IAmigoSecreto {
+export interface IAmigoSecreto {
   nome: string;
   telefone?: string;
   sugestaoPresente?: string;
@@ -31,6 +33,14 @@ const ParticipantePage = () => {
   const [amigoInfo, setAmigoInfo] = useState<IAmigoSecreto | null | undefined>({
     nome: "",
   });
+  const [participanteInfo, setParticipanteInfo] = useState<
+    IAmigoSecreto | null | undefined
+  >({
+    nome: "",
+  });
+
+  const [isSugestao, setIsSugestao] = useState(false);
+
   const { id } = useParams<{ id: string }>();
 
   const getAmigoSecreto = async () => {
@@ -40,7 +50,7 @@ const ParticipantePage = () => {
           Authorization: `${storageValue?.token}`,
         },
       });
-      const data = response.data;
+      const data = await response.data;
       setAmigoInfo(data.amigoSecreto);
     } catch (error: any) {
       if (error.response?.status === 401) {
@@ -50,9 +60,29 @@ const ParticipantePage = () => {
       }
     }
   };
+  const getParticipante = async () => {
+    try {
+      const response = await api.get(
+        `/participante/${id}` /* , {
+        headers: {
+          Authorization: `${storageValue?.token}`,
+        },
+      } */
+      );
+      const data = await response.data;
+      setParticipanteInfo(data);
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        setParticipanteInfo(undefined);
+      } else {
+        setParticipanteInfo(null);
+      }
+    }
+  };
 
   useEffect(() => {
     getAmigoSecreto();
+    getParticipante();
   }, []);
 
   if (amigoInfo?.nome === "") return null;
@@ -70,38 +100,21 @@ const ParticipantePage = () => {
         />
 
         <div className={styles["participante-box"]}>
-          <h1 className={styles["title-participante"]}>Olá, {id}! </h1>
-          <div className={styles["text-container"]}>
-            <p className={styles["text-participante"]}>
-              O sorteio já rolou seu presente será para:
-            </p>
-            <p className={styles["text-participante__highlight"]}>
-              {amigoInfo.nome}!
-            </p>
-            {amigoInfo.sugestaoPresente ? (
-              <>
-                <p className={styles["text-participante"]}>E o pedido foi:</p>
-                <p className={styles["text-participante__highlight"]}>
-                  {amigoInfo.nome}!
-                </p>
-                <p className={styles["text-participante"]}>
-                  A troca de presentes será dia:
-                </p>
-                <p className={styles["text-participante__highlight"]}>25/12</p>
-                <p className={styles["text-participante"]}>E o local será:</p>
-                <p className={styles["text-participante__highlight"]}>
-                  Casa da Tia Maria
-                </p>
-              </>
-            ) : (
-              <p
-                className={styles["text-participante"]}
-              >{`Seu amigo secreto não deixou uma sugestão de presente. :(`}</p>
-            )}
-            <div className={styles["btn-wrapper"]}>
-              <Logout className="btn-sair" />
-            </div>
-          </div>
+          {!isSugestao ? (
+            <AmigoInfo
+              amigoInfo={amigoInfo}
+              styles={styles}
+              userId={id as string}
+              setIsSugestao={setIsSugestao}
+            />
+          ) : (
+            <FormSugestao
+              setIsSugestao={setIsSugestao}
+              participanteInfo={participanteInfo as IAmigoSecreto}
+              styles={styles}
+              userId={id as string}
+            />
+          )}
         </div>
       </main>
     );
@@ -120,15 +133,20 @@ const ParticipantePage = () => {
       </Helmet>
       <img className="logo logo-mini" src="/assets/amigo-secreto.svg" alt="" />
       <div className={styles["participante-box"]}>
-        <h1 className={styles["title-participante"]}>Olá, {id}!</h1>
-        <div className={styles["text-container"]}>
-          <p className={styles["text-participante"]}>
-            O sorteio ainda não aconteceu, volte em breve!
-          </p>
-          <div className={styles["btn-wrapper"]}>
-            <Logout className="btn-sair" />
-          </div>
-        </div>
+        {!isSugestao ? (
+          <AmigoInfo
+            styles={styles}
+            userId={id as string}
+            setIsSugestao={setIsSugestao}
+          />
+        ) : (
+          <FormSugestao
+            participanteInfo={participanteInfo as IAmigoSecreto}
+            setIsSugestao={setIsSugestao}
+            styles={styles}
+            userId={id as string}
+          />
+        )}
       </div>
     </main>
   );

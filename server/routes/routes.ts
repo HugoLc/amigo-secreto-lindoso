@@ -4,7 +4,6 @@ import {
   loginPessoa,
   getAmigoSecreto,
   sortearAmigoSecreto,
-  checkToken,
   getNomesParticipantes,
   getRoles,
   getDashboard,
@@ -17,7 +16,7 @@ const router = express.Router();
 
 router.post("/cadastrar", cadastrarPessoa);
 router.post("/login", loginPessoa);
-router.get("/checktoken", verificarToken, checkToken);
+router.get("/checktoken", verificarToken);
 router.get(
   "/pagina/:participante/amigo-secreto",
   /* self */
@@ -25,14 +24,17 @@ router.get(
   getAmigoSecreto
 );
 //TODO: atualizar verificando o token
-router.patch("/atualizar/:participante", /* REVISAR */ atualizarParticipante);
-router.get("/sortear", /* selfAndAdmin */ sortearAmigoSecreto);
+router.patch(
+  "/atualizar/:participante",
+  /* selfOrAdmin */ atualizarParticipante
+);
+router.get("/sortear", /* selfAndAdmin */ sortearAmigoSecreto); //TODO fazer a mesma regra do dashboard
 router.get("/nomes-participantes", getNomesParticipantes);
-router.get("/roles/:participante", getRoles);
+router.get("/roles/:participante", () => getRoles);
 router.get("/participante/:participante", getUser);
 router.get(
-  "/dashboard/:admin",
-  /* selfAndAdmin */ verificarToken,
+  "/dashboard/:participante",
+  verificarToken,
   getDashboard
 );
 

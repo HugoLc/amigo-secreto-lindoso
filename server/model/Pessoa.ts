@@ -64,7 +64,6 @@ export default class Pessoa {
       const registro = await Participantes.findOne({ nome: this._nome });
 
       if (!registro) {
-        console.log("NAO ENCONTRADO");
         return { status: 404, message: "Registro não encontrado." };
       }
 
@@ -87,7 +86,6 @@ export default class Pessoa {
       if (this._confirmado) {
         registro.confirmado = this._confirmado;
       }
-      console.log({ registro });
       // Salve as alterações
       await registro.save();
 

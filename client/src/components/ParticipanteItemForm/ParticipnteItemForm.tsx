@@ -7,7 +7,6 @@ interface IProps {
 }
 
 const ParticipnteItemForm = ({ participante }: IProps) => {
-  console.log({ participante });
   const [adminState, setAdminState] = useState<boolean>(
     participante.roles.includes(0) || participante.roles.includes(1)
   );

@@ -8,7 +8,7 @@ export interface IParticipante {
   nome: string;
   telefone: string;
   roles: number[];
-  confirmado: boolean
+  confirmado: boolean;
 }
 
 const Admin = () => {
@@ -38,12 +38,12 @@ const Admin = () => {
         },
       });
       const data = await response.data;
-      console.log("data", data);
       setIsAdmin(data?.isAdmin);
       data?.listaParticipantes &&
         setListaParticipantes(data.listaParticipantes);
     } catch (error: any) {
       console.log("ERRO dashboard", error.message);
+      setIsAdmin(false);
     }
   };
 
@@ -61,9 +61,7 @@ const Admin = () => {
               <ParticipnteItemForm participante={participante} />
             ))}
         </ul>
-        <div>
-          
-        </div>
+        <div></div>
       </div>
     );
   } else if (isAdmin === false) {

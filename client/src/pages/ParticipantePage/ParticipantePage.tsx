@@ -53,7 +53,7 @@ const ParticipantePage = () => {
       const data = await response.data;
       setAmigoInfo(data.amigoSecreto);
     } catch (error: any) {
-      if (error.response?.status === 401) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
         setAmigoInfo(undefined);
       } else {
         setAmigoInfo(null);

@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import {
   cadastrarPessoa,
   loginPessoa,
@@ -20,15 +20,20 @@ router.post("/login", loginPessoa);
 router.get("/checktoken", verificarToken, checkToken);
 router.get(
   "/pagina/:participante/amigo-secreto",
+  /* self */
   verificarToken,
   getAmigoSecreto
 );
 //TODO: atualizar verificando o token
-router.patch("/atualizar/:participante", atualizarParticipante);
-router.get("/sortear", sortearAmigoSecreto);
+router.patch("/atualizar/:participante", /* REVISAR */ atualizarParticipante);
+router.get("/sortear", /* selfAndAdmin */ sortearAmigoSecreto);
 router.get("/nomes-participantes", getNomesParticipantes);
 router.get("/roles/:participante", getRoles);
 router.get("/participante/:participante", getUser);
-router.get("/dashboard/:admin", verificarToken, getDashboard);
+router.get(
+  "/dashboard/:admin",
+  /* selfAndAdmin */ verificarToken,
+  getDashboard
+);
 
 export default router;

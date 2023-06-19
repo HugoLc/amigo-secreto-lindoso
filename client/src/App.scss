@@ -66,8 +66,13 @@ button:not(.btn-link) {
   background-color: transparent;
   border: none;
   outline: none;
+  padding: 0;
+  cursor: pointer;
 
   color: #590202;
+  &:hover {
+    color: #bd3f4a;
+  }
 }
 
 .logo {

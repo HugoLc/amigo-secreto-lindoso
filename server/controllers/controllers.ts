@@ -44,6 +44,7 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
   try {
     const participante = new Pessoa(nome);
     const amigoSecretoResponse = await participante.getAmigoSecreto();
+    console.log({ amigoSecretoResponse });
     res.status(amigoSecretoResponse.status).json({
       message: amigoSecretoResponse.message,
       amigoSecreto: amigoSecretoResponse.amigoSecreto || null,
@@ -55,7 +56,7 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
 export const atualizarParticipante = async (req: Request, res: Response) => {
   const nome = req.params.participante;
   const { telefone, sugestaoPresente, roles, confirmado } = req.body;
-
+  
   console.log({ nome, roles, confirmado });
   try {
     const participante = new Pessoa(
@@ -114,7 +115,6 @@ export const getUser = async (req: Request, res: Response) => {
   try {
     const participante = new Pessoa(nome);
     const userResponse = await participante.getUser();
-    console.log({ userResponse });
     res.status(userResponse.status).json(userResponse.amigoSecreto);
   } catch (error: any) {
     res.status(404).json({ message: error.message });

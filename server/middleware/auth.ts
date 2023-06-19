@@ -19,7 +19,7 @@ export function verificarToken(req: Request, res: Response, next: any) {
     const decodedToken = jwt.verify(token, process.env.SECRET as string) as {
       userId: string;
     };
-
+    //TODO: fazer um switch para verificar 3 opções: Self, SelfAndAdmin, SelfOrAdmin
     if (
       req.params.participante &&
       decodedToken.userId !== req.params.participante

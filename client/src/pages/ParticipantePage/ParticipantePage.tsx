@@ -111,6 +111,7 @@ const ParticipantePage = () => {
             <FormSugestao
               setIsSugestao={setIsSugestao}
               participanteInfo={participanteInfo as IAmigoSecreto}
+              token={storageValue?.token}
               styles={styles}
               userId={id as string}
             />
@@ -143,6 +144,7 @@ const ParticipantePage = () => {
           <FormSugestao
             participanteInfo={participanteInfo as IAmigoSecreto}
             setIsSugestao={setIsSugestao}
+            token={storageValue?.token}
             styles={styles}
             userId={id as string}
           />

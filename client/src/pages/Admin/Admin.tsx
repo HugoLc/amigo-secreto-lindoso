@@ -58,7 +58,7 @@ const Admin = () => {
         <ul>
           {listaParticipantes &&
             listaParticipantes.map((participante) => (
-              <ParticipnteItemForm participante={participante} />
+              <ParticipnteItemForm participante={participante} token={storageValue?.token} />
             ))}
         </ul>
         <div></div>

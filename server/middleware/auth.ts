@@ -14,7 +14,6 @@ export async function verificarToken(
   const token = req.headers.authorization;
 
   if (!token) {
-    // Se não houver token, retornar erro de autenticação
     return res
       .status(401)
       .json({ message: "Token de autenticação não fornecido" });
@@ -26,16 +25,15 @@ export async function verificarToken(
       userId: string;
     };
 
-    // const roles = await getRoles(req, res, decodedToken?.userId);
-    const roles = "";
+    console.log("decoded", decodedToken?.userId);
+    const roles = await getRoles(req, res, decodedToken?.userId);
 
-    //TODO: fazer um switch para verificar 3 opções: Self, SelfAndAdmin, SelfOrAdmin
     switch (context) {
       case "selfAndAdmin":
         if (
           req.params.participante &&
           decodedToken.userId == req.params.participante &&
-          (roles.includes("0") || roles.includes("1"))
+          (roles.includes(0) || roles.includes(1))
         ) {
           next();
         } else {
@@ -47,9 +45,9 @@ export async function verificarToken(
       case "selfOrAdmin":
         if (
           req.params.participante &&
-          (decodedToken.userId == req.params.participante ||
-            roles.includes("0") ||
-            roles.includes("1"))
+          (decodedToken.userId === req.params.participante ||
+            roles.includes(0) ||
+            roles.includes(1))
         ) {
           next();
         } else {

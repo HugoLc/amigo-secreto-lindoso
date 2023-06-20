@@ -19,23 +19,18 @@ router.post("/login", loginPessoa);
 router.get("/checktoken", verificarToken);
 router.get(
   "/pagina/:participante/amigo-secreto",
-  /* self */
   verificarToken,
   getAmigoSecreto
 );
-//TODO: atualizar verificando o token
 router.patch(
   "/atualizar/:participante",
-  /* selfOrAdmin */ atualizarParticipante
+  (req, res, next) => verificarToken(req, res, next, "selfOrAdmin"),
+  atualizarParticipante
 );
-router.get("/sortear", /* selfAndAdmin */ sortearAmigoSecreto); //TODO fazer a mesma regra do dashboard
+router.get("/sortear/:participante", verificarToken, sortearAmigoSecreto); //TODO fazer a mesma regra do dashboard
 router.get("/nomes-participantes", getNomesParticipantes);
 router.get("/roles/:participante", () => getRoles);
 router.get("/participante/:participante", getUser);
-router.get(
-  "/dashboard/:participante",
-  verificarToken,
-  getDashboard
-);
+router.get("/dashboard/:participante", verificarToken, getDashboard);
 
 export default router;

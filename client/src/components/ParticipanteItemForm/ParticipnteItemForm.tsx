@@ -4,9 +4,10 @@ import api from "../../service/api";
 
 interface IProps {
   participante: IParticipante;
+  token: string | undefined;
 }
 
-const ParticipnteItemForm = ({ participante }: IProps) => {
+const ParticipnteItemForm = ({ participante, token }: IProps) => {
   const [adminState, setAdminState] = useState<boolean>(
     participante.roles.includes(0) || participante.roles.includes(1)
   );
@@ -29,7 +30,11 @@ const ParticipnteItemForm = ({ participante }: IProps) => {
     };
 
     try {
-      await api.patch(`/atualizar/${participante.nome}`, payload);
+      await api.patch(`/atualizar/${participante.nome}`, payload, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
       window.location.reload();
     } catch (error: any) {
       console.log(error.message);

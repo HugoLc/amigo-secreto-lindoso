@@ -10,6 +10,7 @@ interface IProps {
     [key: string]: string;
   };
   userId: string;
+  token: string | undefined;
   setIsSugestao: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -17,6 +18,7 @@ const FormSugestao = ({
   styles,
   participanteInfo,
   setIsSugestao,
+  token,
   userId,
 }: IProps) => {
   const handleSubmit = async (values: any) => {
@@ -25,7 +27,11 @@ const FormSugestao = ({
     };
 
     try {
-      await api.patch(`/atualizar/${userId}`, payload);
+      await api.patch(`/atualizar/${userId}`, payload, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
       window.location.reload();
     } catch (error: any) {
       console.log(error.message);

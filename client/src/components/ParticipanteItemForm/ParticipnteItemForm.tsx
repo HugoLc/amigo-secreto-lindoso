@@ -5,9 +5,12 @@ import api from "../../service/api";
 interface IProps {
   participante: IParticipante;
   token: string | undefined;
+  styles: {
+    [key: string]: string;
+  };
 }
 
-const ParticipnteItemForm = ({ participante, token }: IProps) => {
+const ParticipnteItemForm = ({ participante, token, styles }: IProps) => {
   const [adminState, setAdminState] = useState<boolean>(
     participante.roles.includes(0) || participante.roles.includes(1)
   );
@@ -62,27 +65,35 @@ const ParticipnteItemForm = ({ participante, token }: IProps) => {
   }, [adminState, confirmadoState]);
 
   return (
-    <li>
+    <li className={styles["item-participante"]}>
       <form onSubmit={handleSubmit}>
-        <span>{participante.nome} | </span>
-        <span>{participante.telefone} | </span>
-        <span>{JSON.stringify(participante.roles)} </span>
-        <label>
-          <input
-            type="checkbox"
-            checked={adminState}
-            onChange={handleAdminCheckboxChange}
-          />
-          Admin
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={confirmadoState}
-            onChange={handleConfirmadoCheckboxChange}
-          />
-          Comprovado
-        </label>
+        <div className={styles["text-wrapper"]}>
+          <div className={styles["text-line"]}></div>
+          <label>Nome: </label>
+          <span>{participante.nome} </span>
+          <div className={styles["text-line"]}>
+            <label>Tel: </label>
+            <span>{participante.telefone} </span>
+          </div>
+        </div>
+        <div className={styles["checkbox-wrapper"]}>
+          <label>
+            <input
+              type="checkbox"
+              checked={adminState}
+              onChange={handleAdminCheckboxChange}
+            />
+            Admin
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={confirmadoState}
+              onChange={handleConfirmadoCheckboxChange}
+            />
+            Comprovado
+          </label>
+        </div>
         <button type="submit" disabled={disableSubmit}>
           Salvar
         </button>

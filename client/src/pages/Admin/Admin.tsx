@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IStorage } from "../ParticipantePage/ParticipantePage";
 import api from "../../service/api";
 import ParticipnteItemForm from "../../components/ParticipanteItemForm/ParticipnteItemForm";
-
+import styles from "./Admin.module.scss";
 export interface IParticipante {
   nome: string;
   telefone: string;
@@ -53,16 +53,24 @@ const Admin = () => {
 
   if (isAdmin) {
     return (
-      <div>
-        Participantes
-        <ul>
-          {listaParticipantes &&
-            listaParticipantes.map((participante) => (
-              <ParticipnteItemForm participante={participante} token={storageValue?.token} />
-            ))}
-        </ul>
-        <div></div>
-      </div>
+      <main className={styles["main-admin"]}>
+        <div className={styles["participantes-container"]}>
+          <div className={styles["header-participantes"]}>
+            <h1>Participantes</h1>
+            <button>Sortear</button>
+          </div>
+          <ul>
+            {listaParticipantes &&
+              listaParticipantes.map((participante) => (
+                <ParticipnteItemForm
+                  participante={participante}
+                  token={storageValue?.token}
+                  styles={styles}
+                />
+              ))}
+          </ul>
+        </div>
+      </main>
     );
   } else if (isAdmin === false) {
     navigate("/");

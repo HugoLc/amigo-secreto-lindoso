@@ -59,7 +59,7 @@ export default class Sorteio {
 
   async buscarBd(): Promise<void> {
     try {
-      const participantesDB = await Participantes.find();
+      const participantesDB = await Participantes.find({ confirmado: true });
       const listaParticipantes = participantesDB.map((participante) => {
         return new Pessoa(
           participante.nome,

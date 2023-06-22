@@ -46,6 +46,19 @@ const Admin = () => {
       setIsAdmin(false);
     }
   };
+  const handleSortear = async () => {
+    try {
+      await api.get(`/sortear/${storageValue?.username}`, {
+        headers: {
+          Authorization: `${storageValue?.token}`,
+        },
+      });
+      // window.location.reload();
+      alert("orteio realizado");
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     getDashboard();
@@ -57,7 +70,7 @@ const Admin = () => {
         <div className={styles["participantes-container"]}>
           <div className={styles["header-participantes"]}>
             <h1>Participantes</h1>
-            <button>Sortear</button>
+            <button onClick={handleSortear}>Sortear</button>
           </div>
           <ul>
             {listaParticipantes &&

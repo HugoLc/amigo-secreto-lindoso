@@ -27,8 +27,9 @@ const AmigoInfo = ({ amigoInfo, styles, userId, setIsSugestao }: IProps) => {
           {amigoInfo.sugestaoPresente ? (
             <>
               <p className={styles["text-participante"]}>E o pedido foi:</p>
+              //TODO: adicionar scroll
               <p className={styles["text-participante__highlight"]}>
-                {amigoInfo.nome}!
+                {amigoInfo.sugestaoPresente}
               </p>
               <p className={styles["text-participante"]}>
                 A troca de presentes será dia:
@@ -40,9 +41,19 @@ const AmigoInfo = ({ amigoInfo, styles, userId, setIsSugestao }: IProps) => {
               </p>
             </>
           ) : (
-            <p
-              className={styles["text-participante"]}
-            >{`Seu amigo secreto não deixou uma sugestão de presente. :(`}</p>
+            <>
+              <p
+                className={styles["text-participante"]}
+              >{`Seu amigo secreto não deixou uma sugestão de presente. :(`}</p>
+              <p className={styles["text-participante"]}>
+                A troca de presentes será dia:
+              </p>
+              <p className={styles["text-participante__highlight"]}>25/12</p>
+              <p className={styles["text-participante"]}>E o local será:</p>
+              <p className={styles["text-participante__highlight"]}>
+                Casa da Tia Maria
+              </p>
+            </>
           )}
           <div className={styles["btn-wrapper"]}>
             <Logout className="btn-sair" />

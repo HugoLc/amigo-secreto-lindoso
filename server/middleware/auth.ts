@@ -25,7 +25,6 @@ export async function verificarToken(
       userId: string;
     };
 
-    console.log("decoded", decodedToken?.userId);
     const roles = await getRoles(req, res, decodedToken?.userId);
 
     switch (context) {

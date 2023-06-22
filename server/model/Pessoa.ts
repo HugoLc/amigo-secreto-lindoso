@@ -68,22 +68,22 @@ export default class Pessoa {
       }
 
       // Atualize os campos desejados
-      if (this._roles) {
+      if (this._roles !== undefined) {
         registro.roles = this._roles;
       }
 
-      if (this._confirmado) {
+      if (this._confirmado !== undefined) {
         registro.confirmado = this._confirmado;
       }
 
-      if (this._telefone) {
+      if (this._telefone !== undefined) {
         registro.telefone = this._telefone;
       }
-      if (this._sugestaoPresente) {
+      if (this._sugestaoPresente !== undefined) {
         registro.sugestaoPresente = this._sugestaoPresente;
       }
 
-      if (this._confirmado) {
+      if (this._confirmado !== undefined) {
         registro.confirmado = this._confirmado;
       }
       // Salve as alterações

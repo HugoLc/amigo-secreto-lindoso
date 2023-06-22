@@ -55,7 +55,7 @@ export const getAmigoSecreto = async (req: Request, res: Response) => {
 export const atualizarParticipante = async (req: Request, res: Response) => {
   const nome = req.params.participante;
   const { telefone, sugestaoPresente, roles, confirmado } = req.body;
-
+  console.log(req.body);
   try {
     const participante = new Pessoa(
       nome,
@@ -136,7 +136,8 @@ export const getRoles = async (
 };
 export const getUser = async (req: Request, res: Response) => {
   const nome = req.params.participante;
-  if (!nome) return res.status(400).json({ message: "Participante não fornecido" });
+  if (!nome)
+    return res.status(400).json({ message: "Participante não fornecido" });
   try {
     const participante = new Pessoa(nome);
     const userResponse = await participante.getUser();

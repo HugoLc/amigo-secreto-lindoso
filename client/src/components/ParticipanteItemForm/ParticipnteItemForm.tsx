@@ -31,14 +31,14 @@ const ParticipnteItemForm = ({ participante, token, styles }: IProps) => {
       roles: adminState ? [1, 2] : [2],
       confirmado: confirmadoState,
     };
-
+    console.log("payload", payload);
     try {
       await api.patch(`/atualizar/${participante.nome}`, payload, {
         headers: {
           Authorization: `${token}`,
         },
       });
-      window.location.reload();
+      // window.location.reload();
     } catch (error: any) {
       console.log(error.message);
     }
@@ -52,6 +52,7 @@ const ParticipnteItemForm = ({ participante, token, styles }: IProps) => {
   const handleConfirmadoCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    console.log("Entrou");
     setConfirmadoState(event.target.checked);
   };
 

@@ -1,12 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../service/api";
 import { Helmet } from "react-helmet";
 import styles from "./ParticipantePage.module.scss";
-import Logout from "../../components/Header/Logout";
 import AmigoInfo from "../../components/AmigoInfo/AmigoInfo";
 import FormSugestao from "../../components/FormSugestao/FormSugestao";
-
+import LoginContext from "../../context/LoginContext";
 export interface IStorage {
   username: string;
   token: string;
@@ -20,6 +19,7 @@ export interface IAmigoSecreto {
 
 const ParticipantePage = () => {
   const navigate = useNavigate();
+  const loginContext = useContext(LoginContext);
   const storageValue = useMemo<IStorage | null>(() => {
     if (localStorage.getItem("amigoSecretoToken")) {
       const value = JSON.parse(
@@ -98,7 +98,10 @@ const ParticipantePage = () => {
           src="/assets/amigo-secreto.svg"
           alt=""
         />
-
+        {loginContext?.roles?.includes(0) ||
+          (loginContext?.roles?.includes(1) && (
+            <button onClick={() => navigate("/dashboard/" + id)}>Admin</button>
+          ))}
         <div className={styles["participante-box"]}>
           {!isSugestao ? (
             <AmigoInfo
@@ -133,6 +136,10 @@ const ParticipantePage = () => {
         <title>Amigo secreto | {id}</title>
       </Helmet>
       <img className="logo logo-mini" src="/assets/amigo-secreto.svg" alt="" />
+      {loginContext?.roles?.includes(0) ||
+        (loginContext?.roles?.includes(1) && (
+          <button onClick={() => navigate("/dashboard/" + id)}>Admin</button>
+        ))}
       <div className={styles["participante-box"]}>
         {!isSugestao ? (
           <AmigoInfo

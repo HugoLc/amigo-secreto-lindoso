@@ -25,7 +25,7 @@ export async function verificarToken(
       userId: string;
     };
 
-    const roles = await getRoles(req, res, decodedToken?.userId);
+    const roles = await getRoles(req, res, undefined, decodedToken?.userId);
 
     switch (context) {
       case "selfAndAdmin":

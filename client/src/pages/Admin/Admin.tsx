@@ -67,6 +67,9 @@ const Admin = () => {
   if (isAdmin) {
     return (
       <main className={styles["main-admin"]}>
+        <button onClick={() => navigate("/amigo-secreto/" + admin)}>
+          Voltar
+        </button>
         <div className={styles["participantes-container"]}>
           <div className={styles["header-participantes"]}>
             <h1>Participantes</h1>

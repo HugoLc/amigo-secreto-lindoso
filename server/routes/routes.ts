@@ -29,7 +29,9 @@ router.patch(
 );
 router.get("/sortear/:participante", verificarToken, sortearAmigoSecreto); //TODO fazer a mesma regra do dashboard
 router.get("/nomes-participantes", getNomesParticipantes);
-router.get("/roles/:participante", () => getRoles);
+router.get("/roles/:participante", (req, res, next) =>
+  getRoles(req, res, next)
+);
 router.get("/participante/:participante", getUser);
 router.get("/dashboard/:participante", verificarToken, getDashboard);
 

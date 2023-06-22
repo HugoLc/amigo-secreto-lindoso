@@ -108,6 +108,7 @@ export const getNomesParticipantes = async (req: Request, res: Response) => {
 export const getRoles = async (
   req: Request,
   res: Response,
+  next: any,
   participante: string | undefined = undefined
 ) => {
   let nome: string;

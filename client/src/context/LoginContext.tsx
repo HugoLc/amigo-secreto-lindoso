@@ -34,7 +34,7 @@ const LoginContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   const checkToken = async () => {
     try {
-      const response = await api.get("/checktoken", {
+      await api.get("/checktoken", {
         headers: {
           Authorization: `${storageToken}`,
         },
@@ -47,12 +47,9 @@ const LoginContextProvider = ({ children }: { children: React.ReactNode }) => {
   };
   const getRoles = async () => {
     if (!storageUser) return;
+
     try {
-      const response = await api.get(`/roles/${storageUser}`, {
-        headers: {
-          Authorization: `${storageToken}`,
-        },
-      });
+      const response = await api.get(`/roles/${storageUser}`);
       const data = await response.data;
       setRoles(data?.roles);
     } catch (error: any) {

@@ -105,6 +105,20 @@ export const getNomesParticipantes = async (req: Request, res: Response) => {
     res.status(404).json({ message: error.message });
   }
 };
+export const getTestSorteioParticipantes = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const participantes = await Participantes.find({ confirmado: true }).sort({
+      nome: 1,
+    });
+    res.status(200).json(participantes);
+  } catch (error: any) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const getRoles = async (
   req: Request,
   res: Response,

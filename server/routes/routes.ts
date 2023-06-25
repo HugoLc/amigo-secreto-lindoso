@@ -9,6 +9,7 @@ import {
   getDashboard,
   atualizarParticipante,
   getUser,
+  getTestSorteioParticipantes,
 } from "../controllers/controllers";
 import { verificarToken } from "../middleware/auth";
 
@@ -33,6 +34,7 @@ router.get("/roles/:participante", (req, res, next) =>
   getRoles(req, res, next)
 );
 router.get("/participante/:participante", getUser);
+router.get("/test-sorteio", getTestSorteioParticipantes);
 router.get("/dashboard/:participante", verificarToken, getDashboard);
 
 export default router;

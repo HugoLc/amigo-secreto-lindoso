@@ -4,6 +4,7 @@ import { IStorage } from "../ParticipantePage/ParticipantePage";
 import api from "../../service/api";
 import ParticipnteItemForm from "../../components/ParticipanteItemForm/ParticipnteItemForm";
 import styles from "./Admin.module.scss";
+import ListaParticipantes from "../../components/ListaParticipantes/ListaParticipantes";
 export interface IParticipante {
   nome: string;
   telefone: string;
@@ -15,6 +16,7 @@ const Admin = () => {
   const navigate = useNavigate();
 
   const [isAdmin, setIsAdmin] = useState<boolean>();
+  const [showSorteio, setShowSorteio] = useState<boolean>(false);
   const [listaParticipantes, setListaParticipantes] =
     useState<IParticipante[]>();
 
@@ -55,6 +57,7 @@ const Admin = () => {
       });
       // window.location.reload();
       alert("Sorteio realizado");
+      setShowSorteio(true);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -66,27 +69,39 @@ const Admin = () => {
 
   if (isAdmin) {
     return (
-      <main className={styles["main-admin"]}>
-        <button onClick={() => navigate("/amigo-secreto/" + admin)}>
-          Voltar
-        </button>
-        <div className={styles["participantes-container"]}>
-          <div className={styles["header-participantes"]}>
-            <h1>Participantes</h1>
-            <button onClick={handleSortear}>Sortear</button>
+      <>
+        <main className={styles["main-admin"]}>
+          <button onClick={() => navigate("/amigo-secreto/" + admin)}>
+            Voltar
+          </button>
+          <div className={styles["participantes-container"]}>
+            <div className={styles["header-participantes"]}>
+              <h1>Participantes</h1>
+              <button onClick={handleSortear}>Sortear</button>
+            </div>
+            <ul>
+              {listaParticipantes &&
+                listaParticipantes.map((participante) => (
+                  <ParticipnteItemForm
+                    participante={participante}
+                    token={storageValue?.token}
+                    styles={styles}
+                  />
+                ))}
+            </ul>
           </div>
-          <ul>
-            {listaParticipantes &&
-              listaParticipantes.map((participante) => (
-                <ParticipnteItemForm
-                  participante={participante}
-                  token={storageValue?.token}
-                  styles={styles}
-                />
-              ))}
-          </ul>
-        </div>
-      </main>
+        </main>
+        {showSorteio ? (
+          <>
+            <div className="overlay"></div>
+            <div className="test-lista-sorteio">
+              <p>SOMENTE PARA TESTES </p>
+              <button onClick={() => setShowSorteio(false)}>Fechar</button>
+              <ListaParticipantes />
+            </div>
+          </>
+        ) : null}
+      </>
     );
   } else if (isAdmin === false) {
     navigate("/");

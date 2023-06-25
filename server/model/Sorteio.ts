@@ -5,7 +5,6 @@ export default class Sorteio {
   public participantes?: Pessoa[];
 
   constructor() {
-    //   this.participantes = this.atualizarBd();
     this.participantes = [];
   }
 
@@ -15,32 +14,42 @@ export default class Sorteio {
     });
 
     if (!listaNomesParticipantes) return [];
-    var participantesDisponiveis = listaNomesParticipantes.slice();
-    var resultadoSorteio = [];
+    var resultadoSorteio: Pessoa[] = [];
+    let participante = listaNomesParticipantes[0];
+    let primeiroParticipante = listaNomesParticipantes[0];
+    var participantesDisponiveis = listaNomesParticipantes.slice(1);
 
-    // Itera por cada participante
-    for (var i = 0; i < listaNomesParticipantes.length; i++) {
-      var participante = listaNomesParticipantes[i];
-      var indexSorteado = Math.floor(
-        Math.random() * participantesDisponiveis.length
-      );
-      var sorteado = participantesDisponiveis[indexSorteado];
-
-      // Verifica se o participante sorteado é o próprio participante
-      if (sorteado === participante) {
-        // Se for, sorteia novamente até obter um sorteado diferente
-        while (sorteado === participante) {
-          indexSorteado = Math.floor(
-            Math.random() * participantesDisponiveis.length
-          );
-          sorteado = participantesDisponiveis[indexSorteado];
-        }
+    async function handleSorteio(
+      participante: string,
+      participantesDisponiveis: string[]
+    ) {
+      if (participantesDisponiveis.length === 1) {
+        let resultadoPenultimo = new Pessoa(
+          participante,
+          undefined,
+          undefined,
+          undefined,
+          participantesDisponiveis[0]
+        );
+        let resultadoUltimo = new Pessoa(
+          participantesDisponiveis[0],
+          undefined,
+          undefined,
+          undefined,
+          primeiroParticipante
+        );
+        resultadoSorteio.push(resultadoPenultimo);
+        resultadoSorteio.push(resultadoUltimo);
+        return;
       }
 
-      // Remove o sorteado da lista de participantes disponíveis
+      let indexSorteado = Math.floor(
+        Math.random() * participantesDisponiveis.length
+      );
+      let sorteado = participantesDisponiveis[indexSorteado];
+
       participantesDisponiveis.splice(indexSorteado, 1);
 
-      // Cria um objeto com o participante e o seu sorteado
       var resultado = new Pessoa(
         participante,
         undefined,
@@ -49,11 +58,12 @@ export default class Sorteio {
         sorteado
       );
 
-      // Adiciona o resultado ao array de resultados
       resultadoSorteio.push(resultado);
-    }
+      participante = sorteado;
 
-    // Retorna o array de resultados
+      await handleSorteio(participante, participantesDisponiveis);
+    }
+    await handleSorteio(participante, participantesDisponiveis);
     return resultadoSorteio;
   }
 

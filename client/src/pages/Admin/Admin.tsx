@@ -54,7 +54,7 @@ const Admin = () => {
         },
       });
       // window.location.reload();
-      alert("orteio realizado");
+      alert("Sorteio realizado");
     } catch (error: any) {
       console.log(error.message);
     }

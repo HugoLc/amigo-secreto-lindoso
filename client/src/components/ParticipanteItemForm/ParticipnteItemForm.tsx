@@ -31,13 +31,13 @@ const ParticipnteItemForm = ({ participante, token, styles }: IProps) => {
       roles: adminState ? [1, 2] : [2],
       confirmado: confirmadoState,
     };
-    console.log("payload", payload);
     try {
       await api.patch(`/atualizar/${participante.nome}`, payload, {
         headers: {
           Authorization: `${token}`,
         },
       });
+      alert("Registro atualizado");
       // window.location.reload();
     } catch (error: any) {
       console.log(error.message);

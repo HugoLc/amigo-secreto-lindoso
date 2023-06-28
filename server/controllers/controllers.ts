@@ -3,6 +3,7 @@ import Pessoa from "../model/Pessoa";
 import Sorteio from "../model/Sorteio";
 import CryptoJS from "crypto-js";
 import Participantes from "../model/pessoa.models";
+import SorteioModel from "../model/sorteio.models";
 
 export const cadastrarPessoa = async (req: Request, res: Response) => {
   let { nome, senha, telefone, sugestaoPresente } = req.body;
@@ -183,6 +184,23 @@ export const getDashboard = async (req: Request, res: Response) => {
         listaParticipantes,
       });
     }
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const criarSorteio = async (req: Request, res: Response) => {
+  const { dataSorteio, dataTrocaPresente, localTrocaPresente } = req.body;
+
+  const newSorteio = new SorteioModel({
+    dataSorteio,
+    dataTrocaPresente,
+    localTrocaPresente,
+  });
+
+  try {
+    await newSorteio.save();
+    return res.status(200).json({ message: "Sorteio cadastrada com sucesso!" });
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }

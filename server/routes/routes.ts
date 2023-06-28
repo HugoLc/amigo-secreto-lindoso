@@ -10,6 +10,7 @@ import {
   atualizarParticipante,
   getUser,
   getTestSorteioParticipantes,
+  // criarSorteio,
 } from "../controllers/controllers";
 import { verificarToken } from "../middleware/auth";
 
@@ -36,5 +37,12 @@ router.get("/roles/:participante", (req, res, next) =>
 router.get("/participante/:participante", getUser);
 router.get("/test-sorteio", getTestSorteioParticipantes);
 router.get("/dashboard/:participante", verificarToken, getDashboard);
+// router.post("/criar-sorteio", criarSorteio);
+
+//TODO: pegar sorteio
+
+//TODO: atualizar sorteio
+
+
 
 export default router;
